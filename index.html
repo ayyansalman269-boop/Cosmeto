@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cosmeto Cosmetics</title>
+  <title>USHA'S Beauty</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
@@ -46,13 +46,18 @@
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
     .product-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); transition: transform 0.2s, box-shadow 0.2s; position: relative; display: flex; flex-direction: column; }
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-    .product-img { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; cursor: pointer; }
+    .product-img { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; cursor: pointer; transition: opacity 0.2s; }
     .product-info { padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; }
     .product-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.4rem; cursor: pointer; }
     .product-price { font-weight: 700; color: var(--primary-dark); margin-bottom: 0.8rem; }
     .card-actions { margin-top: auto; display: flex; gap: 0.5rem; }
-    .edit-badge-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; display: none; }
+    .edit-badge-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; display: none; z-index: 10; }
     .admin-active .edit-badge-btn { display: block; }
+
+    /* Inline Card Shade Picker */
+    .card-swatches { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+    .mini-swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid #ddd; cursor: pointer; transition: transform 0.1s; position: relative; }
+    .mini-swatch.selected { border: 2px solid #000; transform: scale(1.15); }
 
     /* Product Details Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
@@ -61,7 +66,7 @@
     @media(max-width: 650px) { .modal-content { grid-template-columns: 1fr; } }
     .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
     .modal-img-container { display: flex; flex-direction: column; gap: 1rem; }
-    .modal-img { width: 100%; height: 340px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); }
+    .modal-img { width: 100%; height: 340px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); transition: opacity 0.25s; }
     .modal-details { display: flex; flex-direction: column; }
     
     /* Swatches & Finish Badges */
@@ -70,9 +75,6 @@
     .swatch { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; position: relative; background-size: cover; background-position: center; }
     .swatch:hover { transform: scale(1.1); }
     .swatch.selected { border-color: #000; transform: scale(1.15); box-shadow: 0 0 8px rgba(0,0,0,0.3); }
-    
-    /* Glitter Effect Preview on Swatch */
-    .swatch.glitter::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 20%); background-size: 6px 6px; }
     
     .finish-tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; background: #eee; color: #444; margin-left: 6px; }
     .finish-matte { background: #e0d0d8; color: #5a2e43; }
@@ -93,7 +95,7 @@
 
   <!-- Header -->
   <header>
-    <div class="brand">Cosmeto Cosmetics</div>
+    <div class="brand">USHA'S Beauty</div>
     <div class="nav-tools">
       <button class="btn" id="toggleAdminBtn"><i class="fa-solid fa-user-gear"></i> Admin Panel</button>
       <button class="cart-btn" id="cartBtn">
@@ -114,11 +116,11 @@
         <div class="form-grid">
           <div class="form-group">
             <label>Product Name</label>
-            <input type="text" id="prodName" required placeholder="e.g. Velvet Lip Gloss">
+            <input type="text" id="prodName" required placeholder="e.g. T.V. Paint Matt Stick">
           </div>
           <div class="form-group">
-            <label>Price ($)</label>
-            <input type="number" step="0.01" id="prodPrice" required placeholder="19.99">
+            <label>Price (Rs.)</label>
+            <input type="number" step="1" id="prodPrice" required placeholder="1499">
           </div>
           <div class="form-group">
             <label>Main Default Image URL</label>
@@ -146,7 +148,7 @@
     </div>
 
     <!-- Product Grid -->
-    <h2 style="margin-bottom: 1.5rem;">Our Products</h2>
+    <h2 style="margin-bottom: 1.5rem;">Our Collection</h2>
     <div class="products-grid" id="productsGrid"></div>
   </div>
 
@@ -162,7 +164,7 @@
         <div class="product-price" id="modalPrice" style="font-size: 1.3rem;"></div>
         <p id="modalDesc" style="color: #666; font-size: 0.95rem; margin-bottom: 1rem;"></p>
         
-        <div class="swatch-label">Choose Shade & Texture:</div>
+        <div class="swatch-label">Choose Shade & Finish:</div>
         <div class="swatches-container" id="modalSwatches"></div>
         <div id="selectedShadeInfo" style="font-size: 0.9rem; color: #444; margin-bottom: 1.5rem; font-weight: 600;">
           Selected: <span id="selectedShadeName">None</span> <span id="selectedFinishTag" class="finish-tag"></span>
@@ -177,62 +179,62 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4>About Cosmeto Cosmetics</h4>
-        <p>Cosmeto Cosmetics offers premium, cruelty-free, and highly pigmented makeup essentials engineered to celebrate every skin tone and style. Designed for everyday glamour and professional precision.</p>
+        <h4>About USHA'S Beauty</h4>
+        <p>USHA'S offers professional-grade makeup essentials designed for high performance, smooth blending, and full coverage suited for all skin tones.</p>
       </div>
       <div class="footer-col">
         <h4>Customer Care</h4>
         <ul>
-          <li><a href="#">Shipping & Returns</a></li>
-          <li><a href="#">Shade Finder Guide</a></li>
-          <li><a href="#">Track Order</a></li>
-          <li><a href="#">FAQ & Support</a></li>
+          <li><a href="#">Shipping & Deliveries</a></li>
+          <li><a href="#">Shade Matching Guide</a></li>
+          <li><a href="#">Order Tracking</a></li>
+          <li><a href="#">Contact Support</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
-        <p><i class="fa-solid fa-envelope"></i> support@cosmetocosmetics.com</p>
-        <p><i class="fa-solid fa-phone"></i> +1 (800) 555-COSMETO</p>
-        <p><i class="fa-solid fa-location-dot"></i> Beauty Lane, Fashion District, NY</p>
+        <p><i class="fa-solid fa-envelope"></i> support@ushasbeauty.com</p>
+        <p><i class="fa-solid fa-phone"></i> +92 (300) 123-4567</p>
+        <p><i class="fa-solid fa-location-dot"></i> Karachi, Pakistan</p>
       </div>
       <div class="footer-col">
         <h4>Follow Us</h4>
         <div style="display: flex; gap: 1rem; margin-top: 0.5rem; font-size: 1.2rem;">
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
           <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 Cosmeto Cosmetics. All rights reserved.
+      &copy; 2026 USHA'S Beauty. All rights reserved.
     </div>
   </footer>
 
   <script>
-    // Initial Products State
+    // Initial Products State (PKR prices & shade images dynamic linking)
     let products = [
       {
         id: 1,
-        name: "Velvet Lip Color",
-        price: 22.00,
+        name: "TV Paint Matt Stick Foundation",
+        price: 1850,
         img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80",
-        desc: "High-pigment color available in versatile finishes from ultra-matte to radiant glitter.",
+        desc: "Full coverage base stick with oil control finish. Choose your specific skin shade below.",
         shades: [
-          { name: "Ruby Red", color: "#B83A4B", finish: "matte", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" },
-          { name: "Sparkling Plum", color: "#800020", finish: "glitter", img: "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?w=500&q=80" },
-          { name: "Soft Nude", color: "#D87093", finish: "simple", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" }
+          { name: "Velvet Red", color: "#B83A4B", finish: "matte", img: "image_agent_tag_12381378327912655709" },
+          { name: "Sparkling Ruby", color: "#800020", finish: "glitter", img: "image_agent_tag_12381378327912654524" },
+          { name: "Sunset Nude", color: "#D87093", finish: "simple", img: "image_agent_tag_12381378327912656894" }
         ]
       },
       {
         id: 2,
-        name: "Derma Studio Blush",
-        price: 18.50,
+        name: "Air Matte Blush",
+        price: 1450,
         img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80",
-        desc: "Weightless texture that blends smoothly onto cheeks for a glowing blush effect.",
+        desc: "Soft-focus powder blush that glides effortlessly across cheekbones.",
         shades: [
-          { name: "Peach Soft", color: "#FFA07A", finish: "simple", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" },
-          { name: "Matte Rose", color: "#FA8072", finish: "matte", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" }
+          { name: "Warm Peach", color: "#FFA07A", finish: "simple", img: "image_agent_tag_12381378327912656894" },
+          { name: "Matte Rosewood", color: "#FA8072", finish: "matte", img: "image_agent_tag_12381378327912655709" }
         ]
       }
     ];
@@ -261,21 +263,52 @@
     function renderProducts() {
       productsGrid.innerHTML = '';
       products.forEach(p => {
+        // Set initial display shade
+        const activeShade = p.selectedShade || p.shades[0];
+        const displayImg = (activeShade && activeShade.img) ? activeShade.img : p.img;
+
         const card = document.createElement('div');
         card.className = 'product-card';
+        
+        // Build Shade Swatches HTML for the Card
+        let swatchesHtml = '';
+        p.shades.forEach((s, idx) => {
+          const isSel = s === activeShade ? 'selected' : '';
+          swatchesHtml += `<div class="mini-swatch ${isSel}" style="background-color:${s.color};" title="${s.name} (${s.finish})" onclick="event.stopPropagation(); selectCardShade(${p.id}, ${idx})"></div>`;
+        });
+
         card.innerHTML = `
           <button class="edit-badge-btn" onclick="openEditForm(${p.id})"><i class="fa-solid fa-pen"></i> Edit</button>
-          <img src="${p.img}" class="product-img" onclick="openProductModal(${p.id})" alt="${p.name}">
+          <img src="${displayImg}" class="product-img" id="card-img-${p.id}" onclick="openProductModal(${p.id})" alt="${p.name}">
           <div class="product-info">
             <div class="product-title" onclick="openProductModal(${p.id})">${p.name}</div>
-            <div class="product-price">$${p.price.toFixed(2)}</div>
+            <div class="product-price">Rs. ${p.price.toLocaleString()}</div>
+            <div class="card-swatches">${swatchesHtml}</div>
             <div class="card-actions">
-              <button class="btn" style="width: 100%;" onclick="openProductModal(${p.id})">Select Shades & Buy</button>
+              <button class="btn" style="width: 100%;" onclick="openProductModal(${p.id})">Quick View / Buy</button>
             </div>
           </div>
         `;
         productsGrid.appendChild(card);
       });
+    }
+
+    // Dynamic Card Shade Swap
+    function selectCardShade(productId, shadeIndex) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+
+      prod.selectedShade = prod.shades[shadeIndex];
+      const imgEl = document.getElementById(`card-img-${productId}`);
+      
+      if (imgEl && prod.selectedShade.img) {
+        imgEl.style.opacity = '0.3';
+        setTimeout(() => {
+          imgEl.src = prod.selectedShade.img;
+          imgEl.style.opacity = '1';
+        }, 150);
+      }
+      renderProducts();
     }
 
     // Dynamic Admin Shade Rows
@@ -290,7 +323,7 @@
           <option value="glitter" ${finish === 'glitter' ? 'selected' : ''}>Glitter</option>
           <option value="simple" ${finish === 'simple' ? 'selected' : ''}>Simple</option>
         </select>
-        <input type="url" placeholder="Shade Specific Image URL (optional)" value="${img}" class="shade-img-input">
+        <input type="url" placeholder="Shade Image URL (Swaps image on click)" value="${img}" class="shade-img-input">
         <button type="button" style="color:red; background:none; border:none; cursor:pointer;" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>
       `;
       shadeRowsContainer.appendChild(row);
@@ -301,36 +334,46 @@
     // Open Modal Details
     function openProductModal(id) {
       selectedCurrentProduct = products.find(p => p.id === id);
-      selectedShadeObj = selectedCurrentProduct.shades[0] || { name: 'Default', color: '#ccc', finish: 'simple', img: selectedCurrentProduct.img };
+      selectedShadeObj = selectedCurrentProduct.selectedShade || selectedCurrentProduct.shades[0] || { name: 'Default', color: '#ccc', finish: 'simple', img: selectedCurrentProduct.img };
 
       updateModalView();
       productModal.classList.add('active');
     }
 
     function updateModalView() {
-      const displayImg = (selectedShadeObj && selectedShadeObj.img) ? selectedShadeObj.img : selectedCurrentProduct.img;
-      document.getElementById('modalImg').src = displayImg;
+      const modalImgEl = document.getElementById('modalImg');
+      const targetImg = (selectedShadeObj && selectedShadeObj.img) ? selectedShadeObj.img : selectedCurrentProduct.img;
+
+      modalImgEl.style.opacity = '0.3';
+      setTimeout(() => {
+        modalImgEl.src = targetImg;
+        modalImgEl.style.opacity = '1';
+      }, 150);
+
       document.getElementById('modalTitle').innerText = selectedCurrentProduct.name;
-      document.getElementById('modalPrice').innerText = `$${selectedCurrentProduct.price.toFixed(2)}`;
+      document.getElementById('modalPrice').innerText = `Rs. ${selectedCurrentProduct.price.toLocaleString()}`;
       document.getElementById('modalDesc').innerText = selectedCurrentProduct.desc;
 
-      // Swatches Setup
+      // Render Modal Swatches
       const swatchesContainer = document.getElementById('modalSwatches');
       swatchesContainer.innerHTML = '';
       
       selectedCurrentProduct.shades.forEach((s) => {
         const swatch = document.createElement('div');
-        swatch.className = `swatch ${s.finish} ${s === selectedShadeObj ? 'selected' : ''}`;
+        swatch.className = `swatch ${s === selectedShadeObj ? 'selected' : ''}`;
         swatch.style.backgroundColor = s.color;
+        swatch.title = `${s.name} - ${s.finish.toUpperCase()}`;
         
         swatch.addEventListener('click', () => {
           selectedShadeObj = s;
+          selectedCurrentProduct.selectedShade = s;
           updateModalView();
+          renderProducts(); // Keep card main view synced as well
         });
         swatchesContainer.appendChild(swatch);
       });
 
-      // Update Label & Finish Tag
+      // Update Labels
       document.getElementById('selectedShadeName').innerText = selectedShadeObj.name;
       const tagEl = document.getElementById('selectedFinishTag');
       tagEl.innerText = selectedShadeObj.finish;
@@ -343,10 +386,10 @@
       cartCount++;
       cartCountEl.innerText = cartCount;
       productModal.classList.remove('active');
-      alert(`Added ${selectedCurrentProduct.name} - ${selectedShadeObj.name} (${selectedShadeObj.finish.toUpperCase()}) to cart!`);
+      alert(`Added ${selectedCurrentProduct.name} - Shade: ${selectedShadeObj.name} (${selectedShadeObj.finish.toUpperCase()}) to cart!`);
     });
 
-    // Admin Submit Form
+    // Save Admin Form
     productForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const id = document.getElementById('prodId').value;
@@ -355,7 +398,7 @@
       const img = document.getElementById('prodImg').value;
       const desc = document.getElementById('prodDesc').value;
 
-      // Extract Shades Data from Admin Row Inputs
+      // Extract Shades Data from Admin Panel
       const shadeRows = shadeRowsContainer.querySelectorAll('.shade-input-row');
       const shades = [];
       shadeRows.forEach(row => {
@@ -373,9 +416,9 @@
 
       if (id) {
         const index = products.findIndex(p => p.id == id);
-        products[index] = { id: parseInt(id), name, price, img, desc, shades };
+        products[index] = { id: parseInt(id), name, price, img, desc, shades, selectedShade: shades[0] };
       } else {
-        products.push({ id: Date.now(), name, price, img, desc, shades });
+        products.push({ id: Date.now(), name, price, img, desc, shades, selectedShade: shades[0] });
       }
 
       resetForm();
@@ -393,7 +436,7 @@
       shadeRowsContainer.innerHTML = '';
       prod.shades.forEach(s => addShadeRowData(s.name, s.color, s.finish, s.img));
 
-      document.getElementById('adminFormTitle').innerText = "Edit Product Palette & Details";
+      document.getElementById('adminFormTitle').innerText = "Edit Product & Shades Palette";
       document.getElementById('cancelEditBtn').style.display = "inline-block";
       adminPanel.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -405,13 +448,13 @@
       productForm.reset();
       document.getElementById('prodId').value = '';
       shadeRowsContainer.innerHTML = '';
-      addShadeRowData('Matte Crimson', '#B83A4B', 'matte');
+      addShadeRowData('Matte Crimson', '#B83A4B', 'matte', 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80');
       document.getElementById('adminFormTitle').innerText = "Add New Product";
       document.getElementById('cancelEditBtn').style.display = "none";
     }
 
-    // Default Init
-    addShadeRowData('Matte Crimson', '#B83A4B', 'matte');
+    // Default Initialization
+    addShadeRowData('Matte Crimson', '#B83A4B', 'matte', 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80');
     renderProducts();
   </script>
 </body>
