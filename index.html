@@ -2,1112 +2,417 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cosmeto Cosmetics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --primary: #d47a85;
-      --primary-gradient: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-      --dark: #2a1b24;
-      --light: #fff5f7;
+      --primary: #c88ea7;
+      --primary-dark: #a66a85;
+      --bg-light: #faf6f8;
+      --text-dark: #2c2c2c;
       --card-bg: #ffffff;
-      --text: #4a3e43;
-      --accent: #ff4757;
-      --shadow: 0 8px 25px rgba(212, 122, 133, 0.15);
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-color: #eee0e6;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: linear-gradient(180deg, #fff5f7 0%, #ffffff 100%); color: var(--text); overflow-x: hidden; }
-
-    /* Mobile Header */
-    header {
-      position: sticky; top: 0; background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px); z-index: 1000; box-shadow: 0 4px 15px rgba(212, 122, 133, 0.12);
-      border-bottom: 2px solid #ffe5ec;
-    }
-    .nav-container {
-      max-width: 1200px; margin: 0 auto; display: flex; align-items: center;
-      justify-content: space-between; padding: 12px 15px; flex-wrap: wrap; gap: 10px;
-    }
-    .brand-logo { 
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; 
-      background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      cursor: pointer;
-    }
-    .nav-actions { display: flex; align-items: center; gap: 10px; }
-
-    .search-wrapper { position: relative; flex-grow: 1; max-width: 180px; }
-    .search-input {
-      width: 100%; padding: 8px 14px; border-radius: 20px; border: 2px solid #ffd1dc;
-      outline: none; font-size: 0.8rem; background: #fff;
-    }
-    .search-input:focus { border-color: var(--primary); }
-
-    .cart-btn { 
-      position: relative; background: var(--primary-gradient); border: none; 
-      width: 38px; height: 38px; border-radius: 50%; color: white; font-size: 1.1rem; 
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(255, 117, 140, 0.4);
-    }
-    .cart-badge {
-      position: absolute; top: -4px; right: -4px; background: var(--dark);
-      color: #fff; font-size: 0.7rem; width: 18px; height: 18px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;
-    }
-
-    /* Navigation Bar */
-    .nav-menu { display: flex; width: 100%; justify-content: space-around; list-style: none; border-top: 1px solid #ffe5ec; padding-top: 8px; }
-    .nav-link { 
-      text-decoration: none; color: var(--dark); font-weight: 600; cursor: pointer; 
-      font-size: 0.85rem; padding: 4px 8px;
-    }
-    .nav-link.admin-tab { color: var(--primary); font-weight: 700; }
-
-    /* Mobile Hero Banner */
-    .hero-banner {
-      width: 100%; height: 45vh; min-height: 280px; background-size: cover;
-      background-position: center; display: flex; align-items: center; justify-content: center;
-      color: white; text-align: center; position: relative; background-image: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-    }
-    .hero-overlay {
-      position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42, 27, 36, 0.2) 0%, rgba(42, 27, 36, 0.6) 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;
-    }
-    .hero-title { 
-      font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 8px; 
-      text-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: 800;
-    }
-    .hero-subtitle { font-size: 0.95rem; font-weight: 300; letter-spacing: 0.5px; }
-
-    /* Page Layout */
-    .page-section { display: none; max-width: 1200px; margin: 20px auto; padding: 0 15px; animation: fadeIn 0.3s ease; }
-    .page-section.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-    .section-title { 
-      font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 20px; 
-      text-align: center; color: var(--dark); position: relative; font-weight: 700;
-    }
-    .section-title::after {
-      content: ''; display: block; width: 50px; height: 3px; background: var(--primary-gradient);
-      margin: 6px auto 0; border-radius: 10px;
-    }
-
-    /* Mobile Grid */
-    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    @media (max-width: 360px) { .grid { grid-template-columns: 1fr; } }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg-light); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
     
-    .product-card {
-      background: var(--card-bg); border-radius: 14px; overflow: hidden;
-      box-shadow: var(--shadow); cursor: pointer; display: flex; flex-direction: column; border: 1px solid #ffe5ec;
-    }
-    .product-img { width: 100%; height: 180px; object-fit: cover; }
-    .product-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-    .product-name { font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; color: var(--dark); line-height: 1.2; }
-    .product-price { color: var(--primary); font-weight: 700; font-size: 0.95rem; }
-    .add-cart-btn {
-      width: 100%; padding: 10px; background: var(--primary-gradient); color: white;
-      border: none; border-radius: 20px; font-weight: 600; cursor: pointer;
-      margin-top: 8px; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(255, 117, 140, 0.3);
-    }
+    /* Header */
+    header { background: #fff; border-bottom: 1px solid var(--border-color); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .brand { font-size: 1.8rem; font-weight: 700; color: var(--primary-dark); letter-spacing: 1px; }
+    .nav-tools { display: flex; gap: 1.5rem; align-items: center; }
+    .btn { background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: 600; transition: background 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
+    .cart-btn { position: relative; background: none; border: none; font-size: 1.4rem; color: var(--text-dark); cursor: pointer; }
+    .cart-badge { position: absolute; top: -8px; right: -10px; background: var(--primary-dark); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; }
 
-    /* Swipeable Image Gallery for Mobile */
-    .detail-container { 
-      background: white; padding: 20px; border-radius: 16px; 
-      box-shadow: var(--shadow); border: 1px solid #ffe5ec;
-    }
-    .carousel-view {
-      position: relative; width: 100%; height: 320px; overflow: hidden;
-      border-radius: 12px; touch-action: pan-y;
-    }
-    .carousel-view img {
-      width: 100%; height: 100%; object-fit: cover; display: none;
-    }
-    .carousel-view img.active { display: block; }
-    .carousel-btn {
-      position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.4);
-      color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem;
-    }
-    .carousel-btn.prev { left: 8px; }
-    .carousel-btn.next { right: 8px; }
+    /* Main Container */
+    .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; flex: 1; width: 100%; }
+    
+    /* Admin Panel */
+    .admin-panel { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: none; border: 1px solid var(--border-color); }
+    .admin-panel.active { display: block; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.85rem; font-weight: 600; }
+    .form-group input, .form-group textarea, .form-group select { padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; }
 
-    .gallery-grid { display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; padding-bottom: 5px; }
-    .gallery-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 2px solid transparent; }
-    .gallery-thumb.active { border-color: var(--primary); }
+    /* Dynamic Shade Builder in Admin */
+    .shade-builder-box { background: var(--bg-light); border: 1px dashed var(--primary); padding: 1rem; border-radius: 8px; margin-top: 1rem; }
+    .shade-input-row { display: grid; grid-template-columns: 1fr 1fr 1fr 2fr 30px; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
 
-    .shades-section { margin: 20px 0; }
-    .shades-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--dark); }
-    .shades-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .shade-pill {
-      padding: 6px 12px; border: 1.5px solid #ffd1dc; border-radius: 16px;
-      font-size: 0.75rem; cursor: pointer; background: #fff; font-weight: 500;
-    }
-    .shade-pill.active { background: var(--primary-gradient); color: white; border-color: transparent; }
+    /* Catalog Grid */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+    .product-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); transition: transform 0.2s, box-shadow 0.2s; position: relative; display: flex; flex-direction: column; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .product-img { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; cursor: pointer; }
+    .product-info { padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .product-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.4rem; cursor: pointer; }
+    .product-price { font-weight: 700; color: var(--primary-dark); margin-bottom: 0.8rem; }
+    .card-actions { margin-top: auto; display: flex; gap: 0.5rem; }
+    .edit-badge-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; display: none; }
+    .admin-active .edit-badge-btn { display: block; }
 
-    /* Dedicated Full Page Admin Portal */
-    #admin-page {
-      position: fixed; inset: 0; background: #fff5f7; z-index: 3000;
-      overflow-y: auto; display: none; padding: 20px 15px;
-    }
-    #admin-page.active { display: block; }
-    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .exit-admin-btn {
-      background: var(--dark); color: white; border: none; padding: 8px 16px;
-      border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer;
-    }
-
-    /* Modals */
-    .modal {
-      display: none; position: fixed; inset: 0; background: rgba(42, 27, 36, 0.7);
-      backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; padding: 15px;
-    }
+    /* Product Details Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
     .modal.active { display: flex; }
-    .modal-body { 
-      background: white; border-radius: 16px; max-width: 500px; width: 100%; 
-      max-height: 85vh; overflow-y: auto; padding: 25px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    }
-    .close-modal { position: absolute; top: 15px; right: 18px; font-size: 1.6rem; cursor: pointer; color: #888; }
+    .modal-content { background: white; border-radius: 16px; max-width: 850px; width: 100%; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem; position: relative; }
+    @media(max-width: 650px) { .modal-content { grid-template-columns: 1fr; } }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
+    .modal-img-container { display: flex; flex-direction: column; gap: 1rem; }
+    .modal-img { width: 100%; height: 340px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-color); }
+    .modal-details { display: flex; flex-direction: column; }
+    
+    /* Swatches & Finish Badges */
+    .swatch-label { font-size: 0.9rem; font-weight: 600; margin: 1rem 0 0.5rem 0; }
+    .swatches-container { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .swatch { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; position: relative; background-size: cover; background-position: center; }
+    .swatch:hover { transform: scale(1.1); }
+    .swatch.selected { border-color: #000; transform: scale(1.15); box-shadow: 0 0 8px rgba(0,0,0,0.3); }
+    
+    /* Glitter Effect Preview on Swatch */
+    .swatch.glitter::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, transparent 20%); background-size: 6px 6px; }
+    
+    .finish-tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; background: #eee; color: #444; margin-left: 6px; }
+    .finish-matte { background: #e0d0d8; color: #5a2e43; }
+    .finish-glitter { background: #ffe49e; color: #7a5800; }
+    .finish-simple { background: #e3f2fd; color: #0d47a1; }
 
-    /* Fullscreen Image Viewer */
-    #image-viewer-modal {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-      z-index: 4000; justify-content: center; align-items: center; padding: 10px;
-    }
-    #image-viewer-modal.active { display: flex; }
-    #image-viewer-img { max-width: 95%; max-height: 85vh; object-fit: contain; border-radius: 8px; }
-
-    /* Admin Controls */
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-size: 0.8rem; font-weight: 600; color: var(--dark); }
-    .form-group input, .form-group textarea {
-      width: 100%; padding: 10px; border: 1.5px solid #ffe5ec; border-radius: 8px; outline: none; font-size: 0.85rem;
-    }
-    .dashboard-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-    .dash-card { background: #fff0f3; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #ffccd5; }
-    .dash-card h4 { font-size: 0.8rem; color: #777; }
-    .dash-card p { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-top: 4px; }
-
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.75rem; }
-    th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #ffe5ec; }
-    th { background: #fff0f3; color: var(--dark); }
+    /* Footer */
+    footer { background: #222; color: #eee; padding: 3rem 2rem 1rem 2rem; margin-top: auto; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h4 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--primary); }
+    .footer-col p, .footer-col li { font-size: 0.9rem; color: #aaa; line-height: 1.6; list-style: none; }
+    .footer-col a { color: #aaa; text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid #333; padding-top: 1rem; text-align: center; font-size: 0.8rem; color: #777; }
   </style>
 </head>
 <body>
 
-  <!-- Main App Header -->
-  <header id="main-header">
-    <div class="nav-container">
-      <div class="brand-logo" onclick="showPage('home-page')">Cosmeto</div>
-      <div class="nav-actions">
-        <div class="search-wrapper">
-          <input type="text" class="search-input" placeholder="Search..." onkeyup="handleSearch(this.value)">
-        </div>
-        <button class="cart-btn" onclick="openCart()">
-          🛒 <span class="cart-badge" id="cart-count">0</span>
-        </button>
-      </div>
-      <ul class="nav-menu">
-        <li class="nav-link" onclick="showPage('home-page')">Home</li>
-        <li class="nav-link" onclick="showPage('shop-page')">Categories</li>
-        <li class="nav-link" onclick="showPage('track-page')">Track Order</li>
-        <li class="nav-link admin-tab" onclick="openAdminLogin()">Admin Portal</li>
-      </ul>
+  <!-- Header -->
+  <header>
+    <div class="brand">Cosmeto Cosmetics</div>
+    <div class="nav-tools">
+      <button class="btn" id="toggleAdminBtn"><i class="fa-solid fa-user-gear"></i> Admin Panel</button>
+      <button class="cart-btn" id="cartBtn">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </button>
     </div>
   </header>
 
-  <!-- Home Page -->
-  <div id="home-page" class="page-section active">
-    <div class="hero-banner" id="hero-banner">
-      <div class="hero-overlay">
-        <h1 class="hero-title" id="banner-title">Radiant Beauty</h1>
-        <p class="hero-subtitle" id="banner-subtitle">Explore our exclusive cosmetics line</p>
-      </div>
-    </div>
-    <div style="margin-top: 30px;">
-      <h2 class="section-title">Featured</h2>
-      <div class="grid" id="featured-grid"></div>
-    </div>
-  </div>
-
-  <!-- Categories Page -->
-  <div id="shop-page" class="page-section">
-    <h2 class="section-title">All Products</h2>
-    <div class="grid" id="shop-grid"></div>
-  </div>
-
-  <!-- Detail View -->
-  <div id="detail-page" class="page-section">
-    <div class="detail-container">
-      <div class="carousel-view" id="carousel-view">
-        <button class="carousel-btn prev" onclick="prevSlide()">&lt;</button>
-        <button class="carousel-btn next" onclick="nextSlide()">&gt;</button>
-      </div>
-      <div class="gallery-grid" id="detail-gallery"></div>
-
-      <div style="margin-top: 15px;">
-        <h2 id="detail-title" style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--dark);"></h2>
-        <p id="detail-price" style="font-size: 1.3rem; color: var(--primary); font-weight: 700; margin: 8px 0;"></p>
-        <p id="detail-desc" style="color: #666; font-size: 0.85rem; line-height: 1.5;"></p>
+  <!-- Container -->
+  <div class="container" id="mainContainer">
+    
+    <!-- Admin Add/Edit Panel -->
+    <div class="admin-panel" id="adminPanel">
+      <h3 id="adminFormTitle">Add New Product</h3>
+      <form id="productForm">
+        <input type="hidden" id="prodId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="prodName" required placeholder="e.g. Velvet Lip Gloss">
+          </div>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" step="0.01" id="prodPrice" required placeholder="19.99">
+          </div>
+          <div class="form-group">
+            <label>Main Default Image URL</label>
+            <input type="url" id="prodImg" required placeholder="https://images.unsplash.com/...">
+          </div>
+        </div>
         
-        <div class="shades-section">
-          <div class="shades-title">Select Shade</div>
-          <div class="shades-list" id="detail-shades"></div>
-        </div>
-
-        <button class="add-cart-btn" style="padding: 14px; font-size: 0.9rem;" onclick="addCurrentToCart()">Add To Cart</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Order Tracking -->
-  <div id="track-page" class="page-section">
-    <h2 class="section-title">Track Order</h2>
-    <div style="background: white; padding: 20px; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid #ffe5ec;">
-      <div class="form-group">
-        <label>Enter Order ID</label>
-        <input type="text" id="track-id-input" placeholder="e.g. ORD-123456">
-      </div>
-      <button class="add-cart-btn" onclick="trackOrder()">Track Status</button>
-      <div id="track-result" style="margin-top: 15px;"></div>
-    </div>
-  </div>
-
-  <!-- Cart Modal -->
-  <div class="modal" id="cart-modal">
-    <div class="modal-body">
-      <span class="close-modal" onclick="closeCart()">&times;</span>
-      <h2 class="section-title" style="margin-bottom: 15px; font-size: 1.4rem;">Your Cart</h2>
-      <div id="cart-items-container"></div>
-      <div style="margin-top: 20px; border-top: 2px solid #ffe5ec; padding-top: 15px;">
-        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; color: var(--dark);">
-          <span>Total:</span>
-          <span id="cart-total" style="color: var(--primary);">PKR 0</span>
-        </div>
-        <button class="add-cart-btn" style="margin-top: 15px; padding: 12px;" onclick="openCheckout()">Proceed to Checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Checkout Modal -->
-  <div class="modal" id="checkout-modal">
-    <div class="modal-body">
-      <span class="close-modal" onclick="closeCheckout()">&times;</span>
-      <h2 class="section-title" style="margin-bottom: 15px; font-size: 1.4rem;">Checkout</h2>
-      <form id="checkout-form" onsubmit="processOrder(event)">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="cust-name" required placeholder="Name">
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" id="cust-email" required placeholder="Email">
-        </div>
-        <div class="form-group">
-          <label>Shipping Address</label>
-          <textarea id="cust-address" rows="3" required placeholder="Full Delivery Address"></textarea>
-        </div>
-        <button type="submit" class="add-cart-btn" style="padding: 12px;">Confirm Order (COD)</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Admin Login Modal -->
-  <div class="modal" id="admin-login-modal">
-    <div class="modal-body" style="max-width: 350px;">
-      <span class="close-modal" onclick="closeAdminLogin()">&times;</span>
-      <h2 class="section-title" style="font-size: 1.4rem;">Admin Login</h2>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="admin-pass-input">
-      </div>
-      <button class="add-cart-btn" onclick="verifyAdmin()">Login</button>
-    </div>
-  </div>
-
-  <!-- DEDICATED FULL-SCREEN ADMIN PAGE -->
-  <div id="admin-page">
-    <div class="admin-header">
-      <h2 style="font-family: 'Playfair Display', serif; color: var(--dark); font-size: 1.5rem;">Admin Control</h2>
-      <button class="exit-admin-btn" onclick="exitAdminPortal()">Exit Admin</button>
-    </div>
-
-    <div class="dashboard-cards">
-      <div class="dash-card">
-        <h4>Orders</h4>
-        <p id="dash-orders">0</p>
-      </div>
-      <div class="dash-card">
-        <h4>Revenue</h4>
-        <p id="dash-revenue">PKR 0</p>
-      </div>
-    </div>
-
-    <!-- Product Form -->
-    <div style="background: white; padding: 18px; border-radius: 14px; margin-bottom: 20px; border: 1px solid #ffe5ec;">
-      <h3 style="font-size: 1rem; color: var(--dark); margin-bottom: 12px;">Add New Product</h3>
-      <form id="product-form" onsubmit="saveProduct(event)">
-        <div class="form-group">
-          <label>Product Title</label>
-          <input type="text" id="p-title" required>
-        </div>
-        <div class="form-group">
-          <label>Price (PKR)</label>
-          <input type="number" id="p-price" required>
-        </div>
-        <div class="form-group">
-          <label>Category</label>
-          <input type="text" id="p-category" placeholder="Lipstick, Foundation, etc." required>
-        </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 1rem;">
           <label>Description</label>
-          <textarea id="p-desc" rows="2"></textarea>
+          <textarea id="prodDesc" rows="2" placeholder="Formula details, texture, etc."></textarea>
         </div>
-        <div class="form-group">
-          <label>Shades (Comma separated)</label>
-          <input type="text" id="p-shades" placeholder="01 Red, 02 Pink">
+
+        <!-- Custom Color Palette Builder -->
+        <div class="shade-builder-box">
+          <label style="font-weight:700; font-size:0.9rem;">Shade Palette Configurator (Matte / Glitter / Simple)</label>
+          <div id="shadeRowsContainer" style="margin-top: 0.5rem;"></div>
+          <button type="button" class="btn" id="addShadeRowBtn" style="padding: 4px 10px; font-size: 0.8rem; background:#666; margin-top: 5px;">+ Add Shade Option</button>
         </div>
-        <div class="form-group">
-          <label>Upload Images (Up to 24)</label>
-          <input type="file" id="p-images" multiple accept="image/*">
+
+        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+          <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk"></i> Save Product</button>
+          <button type="button" class="btn" id="cancelEditBtn" style="background:#777; display:none;">Cancel</button>
         </div>
-        <button type="submit" class="add-cart-btn">Save Product</button>
       </form>
     </div>
 
-    <!-- Banner Form -->
-    <div style="background: white; padding: 18px; border-radius: 14px; margin-bottom: 20px; border: 1px solid #ffe5ec;">
-      <h3 style="font-size: 1rem; color: var(--dark); margin-bottom: 12px;">Banner Settings</h3>
-      <form id="banner-form" onsubmit="saveBanner(event)">
-        <div class="form-group">
-          <label>Banner Title</label>
-          <input type="text" id="b-title" required>
-        </div>
-        <div class="form-group">
-          <label>Banner Image File</label>
-          <input type="file" id="b-image" accept="image/*" required>
-        </div>
-        <button type="submit" class="add-cart-btn" style="background: var(--dark);">Update Banner</button>
-      </form>
-    </div>
+    <!-- Product Grid -->
+    <h2 style="margin-bottom: 1.5rem;">Our Products</h2>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
 
-    <!-- Tables -->
-    <div style="background: white; padding: 15px; border-radius: 14px; margin-bottom: 20px; border: 1px solid #ffe5ec; overflow-x: auto;">
-      <h3 style="font-size: 1rem; color: var(--dark);">Recent Orders</h3>
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Customer</th><th>Total</th></tr>
-        </thead>
-        <tbody id="orders-table-body"></tbody>
-      </table>
-    </div>
+  <!-- Product Details / Shade Selection Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModalBtn">&times;</button>
+      <div class="modal-img-container">
+        <img src="" id="modalImg" class="modal-img" alt="Product Image">
+      </div>
+      <div class="modal-details">
+        <h2 id="modalTitle" style="margin-bottom: 0.5rem;"></h2>
+        <div class="product-price" id="modalPrice" style="font-size: 1.3rem;"></div>
+        <p id="modalDesc" style="color: #666; font-size: 0.95rem; margin-bottom: 1rem;"></p>
+        
+        <div class="swatch-label">Choose Shade & Texture:</div>
+        <div class="swatches-container" id="modalSwatches"></div>
+        <div id="selectedShadeInfo" style="font-size: 0.9rem; color: #444; margin-bottom: 1.5rem; font-weight: 600;">
+          Selected: <span id="selectedShadeName">None</span> <span id="selectedFinishTag" class="finish-tag"></span>
+        </div>
 
-    <div style="background: white; padding: 15px; border-radius: 14px; border: 1px solid #ffe5ec; overflow-x: auto;">
-      <h3 style="font-size: 1rem; color: var(--dark);">Product Inventory</h3>
-      <table>
-        <thead>
-          <tr><th>Title</th><th>Price</th><th>Action</th></tr>
-        </thead>
-        <tbody id="inventory-table-body"></tbody>
-      </table>
+        <button class="btn" id="addToCartModalBtn" style="margin-top: auto; padding: 0.8rem;"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+      </div>
     </div>
   </div>
 
-  <!-- Image Viewer Modal -->
-  <div id="image-viewer-modal" onclick="closeImageViewer()">
-    <img id="image-viewer-img" src="" alt="View">
-  </div>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About Cosmeto Cosmetics</h4>
+        <p>Cosmeto Cosmetics offers premium, cruelty-free, and highly pigmented makeup essentials engineered to celebrate every skin tone and style. Designed for everyday glamour and professional precision.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Care</h4>
+        <ul>
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Shade Finder Guide</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">FAQ & Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <p><i class="fa-solid fa-envelope"></i> support@cosmetocosmetics.com</p>
+        <p><i class="fa-solid fa-phone"></i> +1 (800) 555-COSMETO</p>
+        <p><i class="fa-solid fa-location-dot"></i> Beauty Lane, Fashion District, NY</p>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <div style="display: flex; gap: 1rem; margin-top: 0.5rem; font-size: 1.2rem;">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Cosmeto Cosmetics. All rights reserved.
+    </div>
+  </footer>
 
   <script>
-    // --- Pre-loaded 20 Products Catalog ---
-    const initialProducts = [
+    // Initial Products State
+    let products = [
       {
-        id: "PROD-101",
-        title: "T.V. Paint Matt Foundation Stick",
-        price: 2450,
-        category: "Foundation",
-        description: "High-coverage matte foundation stick delivering waterproof, transfer-proof full coverage for professional base makeup.",
-        shades: ["FS-45 Ivory", "FS-38 Natural", "FS-22 Warm Beige", "FS-36 Golden Neutral"],
-        images: [
-          "https://images.unsplash.com/photo-1599733589046-9b8308b5b50d?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80"
+        id: 1,
+        name: "Velvet Lip Color",
+        price: 22.00,
+        img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80",
+        desc: "High-pigment color available in versatile finishes from ultra-matte to radiant glitter.",
+        shades: [
+          { name: "Ruby Red", color: "#B83A4B", finish: "matte", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" },
+          { name: "Sparkling Plum", color: "#800020", finish: "glitter", img: "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?w=500&q=80" },
+          { name: "Soft Nude", color: "#D87093", finish: "simple", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" }
         ]
       },
       {
-        id: "PROD-102",
-        title: "Air Matte Liquid Blush",
-        price: 1850,
-        category: "Blush",
-        description: "Weightless liquid-to-powder blush that seamlessly blends into skin for a natural soft-focus glow.",
-        shades: ["Peachy Keen", "Dusty Rose", "Berry Crush", "Coral Flush"],
-        images: [
-          "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-103",
-        title: "Derma Studio Base Primer",
-        price: 2100,
-        category: "Primer",
-        description: "Pore-minimizing, oil-control face primer that hydrates and primes skin for up to 16-hour long-wear makeup.",
-        shades: ["Translucent Clear", "Color Correcting Green"],
-        images: [
-          "https://images.unsplash.com/photo-1608248597263-000796df9c11?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-104",
-        title: "Starlight Liquid Highlighter",
-        price: 1950,
-        category: "Highlighter",
-        description: "Ultra-pigmented shimmer drop highlighter for a luminous, glass-skin finish on cheekbones and collarbones.",
-        shades: ["Champagne Gold", "Rose Quartz", "Bronze Goddess"],
-        images: [
-          "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-105",
-        title: "Velvet Matte Bullet Lipstick",
-        price: 1450,
-        category: "Lipstick",
-        description: "Non-drying velvet matte lipstick infused with jojoba oil for bold, saturated color payout.",
-        shades: ["01 Crimson Red", "02 Nude Mocha", "03 Ruby Passion", "04 Soft Mauve"],
-        images: [
-          "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-106",
-        title: "Precision Waterproof Eyeliner Stick",
-        price: 1150,
-        category: "Eyes",
-        description: "Smudge-proof 24-hour liquid eyeliner pen featuring a micro-fine felt tip for precise wing lining.",
-        shades: ["Jet Black", "Deep Espresso"],
-        images: [
-          "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-107",
-        title: "Volume Boost Fiber Mascara",
-        price: 1650,
-        category: "Eyes",
-        description: "Dramatic lengthening and volumizing mascara with a curved hour-glass brush that lifts every lash.",
-        shades: ["Extra Black"],
-        images: [
-          "https://images.unsplash.com/photo-1591360236480-4ed861025fa1?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-108",
-        title: "Glitz 12-Color Eyeshadow Palette",
-        price: 3200,
-        category: "Eyes",
-        description: "Highly pigmented nude and shimmer eyeshadow palette featuring velvety mattes and multidimensional metallic foils.",
-        shades: ["Sunset Nudes Palette", "Smokey Night Palette"],
-        images: [
-          "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-109",
-        title: "HD Setting Powder Translucent",
-        price: 1750,
-        category: "Powder",
-        description: "Micro-fine setting powder that locks base makeup in place, absorbs excess shine, and leaves zero flashback.",
-        shades: ["Translucent White", "Banana Tint"],
-        images: [
-          "https://images.unsplash.com/photo-1608248597263-000796df9c11?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1599733589046-9b8308b5b50d?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-110",
-        title: "Hydra Lip Tint Gloss",
-        price: 1250,
-        category: "Lipstick",
-        description: "Non-sticky plump lip gloss infused with hyaluronic acid and rosehip oil for high-shine hydration.",
-        shades: ["Glass Clear", "Cherry Glaze", "Honey Nude"],
-        images: [
-          "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-111",
-        title: "Sculpt & Glow Contour Stick",
-        price: 1900,
-        category: "Contour",
-        description: "Dual-ended cream contour and highlight stick for effortless, natural face sculpting on the go.",
-        shades: ["Light-Medium", "Medium-Deep"],
-        images: [
-          "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-112",
-        title: "Radiant Skin Vitamin C Serum",
-        price: 2600,
-        category: "Skincare",
-        description: "Brightening facial serum with 15% pure Vitamin C and Ferulic Acid to fade dark spots and boost skin glow.",
-        shades: ["Standard 30ml"],
-        images: [
-          "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1608248597263-000796df9c11?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-113",
-        title: "Full Coverage Camouflage Concealer",
-        price: 1550,
-        category: "Concealer",
-        description: "Crease-resistant waterproof concealer that covers dark circles, blemishes, and discoloration for 24 hours.",
-        shades: ["01 Fair Neutral", "02 Sand Beige", "03 Honey Warm"],
-        images: [
-          "https://images.unsplash.com/photo-1599733589046-9b8308b5b50d?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-114",
-        title: "24K Gold Illuminating Facial Oil",
-        price: 2950,
-        category: "Skincare",
-        description: "Luxury botanical facial oil infused with 24K gold flakes for deep nourishment and glowing makeup prep.",
-        shades: ["Standard 50ml"],
-        images: [
-          "https://images.unsplash.com/photo-1608248597263-000796df9c11?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-115",
-        title: "Micro Sculpting Eyebrow Pencil",
-        price: 950,
-        category: "Eyes",
-        description: "Ultra-thin retractable eyebrow pencil with built-in spoolie brush for hair-like strokes.",
-        shades: ["Dark Brown", "Taupe", "Soft Black"],
-        images: [
-          "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1591360236480-4ed861025fa1?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-116",
-        title: "Matte Lock Makeup Setting Spray",
-        price: 1800,
-        category: "Setting Spray",
-        description: "Micro-fine setting spray that holds makeup in place all day without feeling dry or sticky.",
-        shades: ["Matte Finish 100ml"],
-        images: [
-          "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1608248597263-000796df9c11?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-117",
-        title: "Satin Cream Compact Compact Powder",
-        price: 1600,
-        category: "Powder",
-        description: "Press compact powder with micro-pigments for touch-ups, SPF 15 protection, and natural coverage.",
-        shades: ["Ivory Light", "Natural Beige", "Sun Tan"],
-        images: [
-          "https://images.unsplash.com/photo-1599733589046-9b8308b5b50d?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-118",
-        title: "Longwear Matte Liquid Lip Stain",
-        price: 1350,
-        category: "Lipstick",
-        description: "Transfer-proof liquid lipstick with intense pigment payoff that lasts through meals and drinks.",
-        shades: ["Vamp Red", "Bare Nude", "Terracotta"],
-        images: [
-          "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-119",
-        title: "Rose Water Hydrating Face Mist",
-        price: 1200,
-        category: "Skincare",
-        description: "Pure organic rose water mist to refresh, hydrate, and balance facial skin pH throughout the day.",
-        shades: ["120ml Spray Bottle"],
-        images: [
-          "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80"
-        ]
-      },
-      {
-        id: "PROD-120",
-        title: "Pro Beauty Sponge Blender Set",
-        price: 850,
-        category: "Tools",
-        description: "Latex-free precision beauty sponges for seamless blending of foundations, concealers, and powders.",
-        shades: ["Pink & Nude 2-Pack"],
-        images: [
-          "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80",
-          "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80"
+        id: 2,
+        name: "Derma Studio Blush",
+        price: 18.50,
+        img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80",
+        desc: "Weightless texture that blends smoothly onto cheeks for a glowing blush effect.",
+        shades: [
+          { name: "Peach Soft", color: "#FFA07A", finish: "simple", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" },
+          { name: "Matte Rose", color: "#FA8072", finish: "matte", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" }
         ]
       }
     ];
 
-    // --- Database Initialization ---
-    const DB_NAME = "CosmetoDB";
-    let db;
+    let cartCount = 0;
+    let selectedCurrentProduct = null;
+    let selectedShadeObj = null;
 
-    function initDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, 1);
-        request.onupgradeneeded = (e) => {
-          db = e.target.result;
-          if (!db.objectStoreNames.contains("products")) db.createObjectStore("products", { keyPath: "id" });
-          if (!db.objectStoreNames.contains("orders")) db.createObjectStore("orders", { keyPath: "id" });
-          if (!db.objectStoreNames.contains("banners")) db.createObjectStore("banners", { keyPath: "id" });
-        };
-        request.onsuccess = async (e) => { 
-          db = e.target.result; 
-          await seedInitialProducts();
-          resolve(); 
-        };
-        request.onerror = (e) => reject(e);
-      });
-    }
+    // DOM References
+    const productsGrid = document.getElementById('productsGrid');
+    const adminPanel = document.getElementById('adminPanel');
+    const toggleAdminBtn = document.getElementById('toggleAdminBtn');
+    const productForm = document.getElementById('productForm');
+    const shadeRowsContainer = document.getElementById('shadeRowsContainer');
+    const productModal = document.getElementById('productModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cartCountEl = document.getElementById('cartCount');
 
-    async function seedInitialProducts() {
-      const existing = await dbGetAll("products");
-      if (existing.length === 0) {
-        for (const prod of initialProducts) {
-          await dbSave("products", prod);
-        }
-      }
-    }
-
-    function dbSave(storeName, item) {
-      return new Promise((resolve) => {
-        const tx = db.transaction(storeName, "readwrite");
-        tx.objectStore(storeName).put(item);
-        tx.oncomplete = () => resolve();
-      });
-    }
-
-    function dbGetAll(storeName) {
-      return new Promise((resolve) => {
-        const tx = db.transaction(storeName, "readonly");
-        const req = tx.objectStore(storeName).getAll();
-        req.onsuccess = () => resolve(req.result);
-      });
-    }
-
-    function dbDelete(storeName, id) {
-      return new Promise((resolve) => {
-        const tx = db.transaction(storeName, "readwrite");
-        tx.objectStore(storeName).delete(id);
-        tx.oncomplete = () => resolve();
-      });
-    }
-
-    // --- State Variables ---
-    let cart = [];
-    let currentProduct = null;
-    let selectedShade = "";
-    let currentSlideIndex = 0;
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    window.addEventListener("DOMContentLoaded", async () => {
-      await initDB();
-      loadBanners();
-      loadProducts();
-      setupSwipeGestures();
+    // Toggle Admin Mode
+    toggleAdminBtn.addEventListener('click', () => {
+      adminPanel.classList.toggle('active');
+      document.body.classList.toggle('admin-active');
     });
 
-    function formatPKR(num) {
-      return "PKR " + Number(num).toLocaleString('en-PK');
-    }
-
-    function showPage(pageId) {
-      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(pageId).classList.add("active");
-      window.scrollTo(0,0);
-    }
-
-    // --- Product Grid Engine ---
-    async function loadProducts() {
-      const products = await dbGetAll("products");
-      renderGrid("featured-grid", products.slice(0, 6));
-      renderGrid("shop-grid", products);
-      renderInventoryTable(products);
-    }
-
-    function renderGrid(containerId, items) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
-      if (items.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 20px; color: #888; font-size: 0.85rem;">No products available.</p>`;
-        return;
-      }
-
-      items.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        const coverImg = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/300';
-        card.innerHTML = `
-          <img class="product-img" src="${coverImg}" alt="${p.title}">
-          <div class="product-info">
-            <div>
-              <div class="product-name">${p.title}</div>
-              <div class="product-price">${formatPKR(p.price)}</div>
-            </div>
-            <button class="add-cart-btn" onclick="event.stopPropagation(); quickAddToCart('${p.id}')">Add To Cart</button>
-          </div>
-        `;
-        card.onclick = () => openProductDetail(p);
-        container.appendChild(card);
-      });
-    }
-
-    // --- Swipeable Detail View ---
-    function openProductDetail(product) {
-      currentProduct = product;
-      document.getElementById("detail-title").innerText = product.title;
-      document.getElementById("detail-price").innerText = formatPKR(product.price);
-      document.getElementById("detail-desc").innerText = product.description || "No description available.";
-      
-      const carouselView = document.getElementById("carousel-view");
-      const gallery = document.getElementById("detail-gallery");
-      
-      carouselView.innerHTML = `
-        <button class="carousel-btn prev" onclick="prevSlide()">&lt;</button>
-        <button class="carousel-btn next" onclick="nextSlide()">&gt;</button>
-      `;
-      gallery.innerHTML = "";
-      currentSlideIndex = 0;
-
-      if (product.images && product.images.length > 0) {
-        product.images.forEach((imgSrc, idx) => {
-          const img = document.createElement("img");
-          img.src = imgSrc;
-          img.className = idx === 0 ? "active" : "";
-          img.onclick = () => openImageViewer(imgSrc);
-          carouselView.appendChild(img);
-
-          const thumb = document.createElement("img");
-          thumb.className = `gallery-thumb ${idx === 0 ? 'active' : ''}`;
-          thumb.src = imgSrc;
-          thumb.onclick = () => setSlide(idx);
-          gallery.appendChild(thumb);
-        });
-      }
-
-      const shadesContainer = document.getElementById("detail-shades");
-      shadesContainer.innerHTML = "";
-      if (product.shades && product.shades.length > 0) {
-        selectedShade = product.shades[0];
-        product.shades.forEach((shade, idx) => {
-          const pill = document.createElement("div");
-          pill.className = `shade-pill ${idx === 0 ? 'active' : ''}`;
-          pill.innerText = shade;
-          pill.onclick = () => {
-            selectedShade = shade;
-            document.querySelectorAll(".shade-pill").forEach(p => p.classList.remove("active"));
-            pill.classList.add("active");
-          };
-          shadesContainer.appendChild(pill);
-        });
-      }
-
-      showPage("detail-page");
-    }
-
-    function setSlide(index) {
-      const images = document.querySelectorAll("#carousel-view img");
-      const thumbs = document.querySelectorAll(".gallery-thumb");
-      if (images.length === 0) return;
-
-      images.forEach(img => img.classList.remove("active"));
-      thumbs.forEach(t => t.classList.remove("active"));
-
-      currentSlideIndex = (index + images.length) % images.length;
-      images[currentSlideIndex].classList.add("active");
-      if (thumbs[currentSlideIndex]) thumbs[currentSlideIndex].classList.add("active");
-    }
-
-    function nextSlide() { setSlide(currentSlideIndex + 1); }
-    function prevSlide() { setSlide(currentSlideIndex - 1); }
-
-    function setupSwipeGestures() {
-      const carousel = document.getElementById("carousel-view");
-      carousel.addEventListener("touchstart", e => { touchStartX = e.changedTouches[0].screenX; }, false);
-      carousel.addEventListener("touchend", e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      }, false);
-    }
-
-    function handleSwipe() {
-      if (touchEndX < touchStartX - 40) nextSlide();
-      if (touchEndX > touchStartX + 40) prevSlide();
-    }
-
-    function openImageViewer(src) {
-      document.getElementById("image-viewer-img").src = src;
-      document.getElementById("image-viewer-modal").classList.add("active");
-    }
-    function closeImageViewer() {
-      document.getElementById("image-viewer-modal").classList.remove("active");
-    }
-
-    // --- Search ---
-    async function handleSearch(query) {
-      const products = await dbGetAll("products");
-      const filtered = products.filter(p => p.title.toLowerCase().includes(query.toLowerCase()));
-      renderGrid("shop-grid", filtered);
-      showPage("shop-page");
-    }
-
-    // --- Cart ---
-    async function quickAddToCart(id) {
-      const products = await dbGetAll("products");
-      const prod = products.find(p => p.id === id);
-      if (prod) {
-        cart.push({ ...prod, selectedShade: prod.shades ? prod.shades[0] : '' });
-        updateCartUI();
-      }
-    }
-
-    function addCurrentToCart() {
-      if (currentProduct) {
-        cart.push({ ...currentProduct, selectedShade: selectedShade });
-        updateCartUI();
-      }
-    }
-
-    function updateCartUI() {
-      document.getElementById("cart-count").innerText = cart.length;
-      const container = document.getElementById("cart-items-container");
-      container.innerHTML = "";
-      let total = 0;
-
-      cart.forEach((item, idx) => {
-        total += Number(item.price);
-        const el = document.createElement("div");
-        el.style.cssText = "display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; border-bottom: 1px solid #ffe5ec; padding-bottom: 6px; font-size: 0.85rem;";
-        el.innerHTML = `
-          <div>
-            <div style="font-weight:600; color:var(--dark);">${item.title}</div>
-            <div style="font-size:0.75rem; color:#888;">${item.selectedShade ? 'Shade: ' + item.selectedShade : ''}</div>
-            <div style="color:var(--primary); font-weight:700;">${formatPKR(item.price)}</div>
-          </div>
-          <button style="background:none; border:none; color:var(--accent); cursor:pointer; font-weight:600;" onclick="removeFromCart(${idx})">Remove</button>
-        `;
-        container.appendChild(el);
-      });
-
-      document.getElementById("cart-total").innerText = formatPKR(total);
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCartUI();
-    }
-
-    function openCart() { document.getElementById("cart-modal").classList.add("active"); }
-    function closeCart() { document.getElementById("cart-modal").classList.remove("active"); }
-
-    function openCheckout() {
-      if (cart.length === 0) return alert("Cart is empty!");
-      closeCart();
-      document.getElementById("checkout-modal").classList.add("active");
-    }
-    function closeCheckout() { document.getElementById("checkout-modal").classList.remove("active"); }
-
-    // --- Orders ---
-    async function processOrder(e) {
-      e.preventDefault();
-      const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
-      const name = document.getElementById("cust-name").value;
-      const email = document.getElementById("cust-email").value;
-      const address = document.getElementById("cust-address").value;
-      const total = cart.reduce((acc, curr) => acc + Number(curr.price), 0);
-
-      const newOrder = {
-        id: orderId,
-        customer: name,
-        email: email,
-        address: address,
-        items: cart,
-        total: total,
-        status: "Processing",
-        date: new Date().toLocaleDateString()
-      };
-
-      await dbSave("orders", newOrder);
-      alert(`Order Placed!\n\nOrder ID: ${orderId}\nTotal: ${formatPKR(total)}`);
-      cart = [];
-      updateCartUI();
-      closeCheckout();
-    }
-
-    // --- Tracking ---
-    async function trackOrder() {
-      const input = document.getElementById("track-id-input").value.trim();
-      const orders = await dbGetAll("orders");
-      const match = orders.find(o => o.id === input);
-      const resultDiv = document.getElementById("track-result");
-
-      if (match) {
-        resultDiv.innerHTML = `
-          <div style="background: #fff0f3; padding: 12px; border-radius: 10px; border: 1px solid #ffccd5; font-size: 0.85rem;">
-            <p><strong>Order ID:</strong> ${match.id}</p>
-            <p style="margin: 4px 0;"><strong>Status:</strong> <span style="color:var(--primary); font-weight:700;">${match.status}</span></p>
-            <p><strong>Total:</strong> ${formatPKR(match.total)}</p>
-          </div>
-        `;
-      } else {
-        resultDiv.innerHTML = `<p style="color:red; font-size:0.85rem;">Order not found.</p>`;
-      }
-    }
-
-    // --- Admin Portal ---
-    function openAdminLogin() { document.getElementById("admin-login-modal").classList.add("active"); }
-    function closeAdminLogin() { document.getElementById("admin-login-modal").classList.remove("active"); }
-
-    function verifyAdmin() {
-      const pass = document.getElementById("admin-pass-input").value;
-      if (pass === "admin1234") {
-        closeAdminLogin();
-        document.getElementById("main-header").style.display = "none";
-        document.getElementById("admin-page").classList.add("active");
-        renderAdminDashboard();
-      } else {
-        alert("Incorrect Password!");
-      }
-    }
-
-    function exitAdminPortal() {
-      document.getElementById("admin-page").classList.remove("active");
-      document.getElementById("main-header").style.display = "block";
-    }
-
-    async function renderAdminDashboard() {
-      const orders = await dbGetAll("orders");
-      const products = await dbGetAll("products");
-
-      document.getElementById("dash-orders").innerText = orders.length;
-      const revenue = orders.reduce((acc, curr) => acc + Number(curr.total), 0);
-      document.getElementById("dash-revenue").innerText = formatPKR(revenue);
-
-      const ordersBody = document.getElementById("orders-table-body");
-      ordersBody.innerHTML = "";
-      orders.forEach(o => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${o.id}</td>
-          <td>${o.customer}</td>
-          <td>${formatPKR(o.total)}</td>
-        `;
-        ordersBody.appendChild(tr);
-      });
-
-      renderInventoryTable(products);
-    }
-
-    function renderInventoryTable(products) {
-      const invBody = document.getElementById("inventory-table-body");
-      if (!invBody) return;
-      invBody.innerHTML = "";
+    // Render Products Grid
+    function renderProducts() {
+      productsGrid.innerHTML = '';
       products.forEach(p => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${p.title}</td>
-          <td>${formatPKR(p.price)}</td>
-          <td><button style="color:red; border:none; background:none; cursor:pointer;" onclick="deleteProduct('${p.id}')">Delete</button></td>
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <button class="edit-badge-btn" onclick="openEditForm(${p.id})"><i class="fa-solid fa-pen"></i> Edit</button>
+          <img src="${p.img}" class="product-img" onclick="openProductModal(${p.id})" alt="${p.name}">
+          <div class="product-info">
+            <div class="product-title" onclick="openProductModal(${p.id})">${p.name}</div>
+            <div class="product-price">$${p.price.toFixed(2)}</div>
+            <div class="card-actions">
+              <button class="btn" style="width: 100%;" onclick="openProductModal(${p.id})">Select Shades & Buy</button>
+            </div>
+          </div>
         `;
-        invBody.appendChild(tr);
+        productsGrid.appendChild(card);
       });
     }
 
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
+    // Dynamic Admin Shade Rows
+    function addShadeRowData(name = '', color = '#C24050', finish = 'matte', img = '') {
+      const row = document.createElement('div');
+      row.className = 'shade-input-row';
+      row.innerHTML = `
+        <input type="text" placeholder="Shade Name" value="${name}" class="shade-name-input" required>
+        <input type="color" value="${color}" class="shade-color-input">
+        <select class="shade-finish-input">
+          <option value="matte" ${finish === 'matte' ? 'selected' : ''}>Matte</option>
+          <option value="glitter" ${finish === 'glitter' ? 'selected' : ''}>Glitter</option>
+          <option value="simple" ${finish === 'simple' ? 'selected' : ''}>Simple</option>
+        </select>
+        <input type="url" placeholder="Shade Specific Image URL (optional)" value="${img}" class="shade-img-input">
+        <button type="button" style="color:red; background:none; border:none; cursor:pointer;" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></button>
+      `;
+      shadeRowsContainer.appendChild(row);
+    }
+
+    document.getElementById('addShadeRowBtn').addEventListener('click', () => addShadeRowData());
+
+    // Open Modal Details
+    function openProductModal(id) {
+      selectedCurrentProduct = products.find(p => p.id === id);
+      selectedShadeObj = selectedCurrentProduct.shades[0] || { name: 'Default', color: '#ccc', finish: 'simple', img: selectedCurrentProduct.img };
+
+      updateModalView();
+      productModal.classList.add('active');
+    }
+
+    function updateModalView() {
+      const displayImg = (selectedShadeObj && selectedShadeObj.img) ? selectedShadeObj.img : selectedCurrentProduct.img;
+      document.getElementById('modalImg').src = displayImg;
+      document.getElementById('modalTitle').innerText = selectedCurrentProduct.name;
+      document.getElementById('modalPrice').innerText = `$${selectedCurrentProduct.price.toFixed(2)}`;
+      document.getElementById('modalDesc').innerText = selectedCurrentProduct.desc;
+
+      // Swatches Setup
+      const swatchesContainer = document.getElementById('modalSwatches');
+      swatchesContainer.innerHTML = '';
+      
+      selectedCurrentProduct.shades.forEach((s) => {
+        const swatch = document.createElement('div');
+        swatch.className = `swatch ${s.finish} ${s === selectedShadeObj ? 'selected' : ''}`;
+        swatch.style.backgroundColor = s.color;
+        
+        swatch.addEventListener('click', () => {
+          selectedShadeObj = s;
+          updateModalView();
+        });
+        swatchesContainer.appendChild(swatch);
       });
+
+      // Update Label & Finish Tag
+      document.getElementById('selectedShadeName').innerText = selectedShadeObj.name;
+      const tagEl = document.getElementById('selectedFinishTag');
+      tagEl.innerText = selectedShadeObj.finish;
+      tagEl.className = `finish-tag finish-${selectedShadeObj.finish}`;
     }
 
-    async function saveProduct(e) {
+    closeModalBtn.addEventListener('click', () => productModal.classList.remove('active'));
+
+    document.getElementById('addToCartModalBtn').addEventListener('click', () => {
+      cartCount++;
+      cartCountEl.innerText = cartCount;
+      productModal.classList.remove('active');
+      alert(`Added ${selectedCurrentProduct.name} - ${selectedShadeObj.name} (${selectedShadeObj.finish.toUpperCase()}) to cart!`);
+    });
+
+    // Admin Submit Form
+    productForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const files = document.getElementById("p-images").files;
-      const imagePromises = Array.from(files).slice(0, 24).map(file => fileToBase64(file));
-      const imageBase64List = await Promise.all(imagePromises);
+      const id = document.getElementById('prodId').value;
+      const name = document.getElementById('prodName').value;
+      const price = parseFloat(document.getElementById('prodPrice').value);
+      const img = document.getElementById('prodImg').value;
+      const desc = document.getElementById('prodDesc').value;
 
-      const shadesInput = document.getElementById("p-shades").value;
-      const shadesArr = shadesInput ? shadesInput.split(",").map(s => s.trim()) : [];
+      // Extract Shades Data from Admin Row Inputs
+      const shadeRows = shadeRowsContainer.querySelectorAll('.shade-input-row');
+      const shades = [];
+      shadeRows.forEach(row => {
+        shades.push({
+          name: row.querySelector('.shade-name-input').value || 'Shade',
+          color: row.querySelector('.shade-color-input').value,
+          finish: row.querySelector('.shade-finish-input').value,
+          img: row.querySelector('.shade-img-input').value || img
+        });
+      });
 
-      const product = {
-        id: "PROD-" + Date.now(),
-        title: document.getElementById("p-title").value,
-        price: Number(document.getElementById("p-price").value),
-        category: document.getElementById("p-category").value,
-        description: document.getElementById("p-desc").value,
-        shades: shadesArr,
-        images: imageBase64List
-      };
-
-      await dbSave("products", product);
-      alert("Product saved!");
-      document.getElementById("product-form").reset();
-      loadProducts();
-      renderAdminDashboard();
-    }
-
-    async function deleteProduct(id) {
-      if (confirm("Delete product?")) {
-        await dbDelete("products", id);
-        loadProducts();
-        renderAdminDashboard();
+      if (shades.length === 0) {
+        shades.push({ name: "Default", color: "#C24050", finish: "simple", img: img });
       }
+
+      if (id) {
+        const index = products.findIndex(p => p.id == id);
+        products[index] = { id: parseInt(id), name, price, img, desc, shades };
+      } else {
+        products.push({ id: Date.now(), name, price, img, desc, shades });
+      }
+
+      resetForm();
+      renderProducts();
+    });
+
+    function openEditForm(id) {
+      const prod = products.find(p => p.id === id);
+      document.getElementById('prodId').value = prod.id;
+      document.getElementById('prodName').value = prod.name;
+      document.getElementById('prodPrice').value = prod.price;
+      document.getElementById('prodImg').value = prod.img;
+      document.getElementById('prodDesc').value = prod.desc;
+      
+      shadeRowsContainer.innerHTML = '';
+      prod.shades.forEach(s => addShadeRowData(s.name, s.color, s.finish, s.img));
+
+      document.getElementById('adminFormTitle').innerText = "Edit Product Palette & Details";
+      document.getElementById('cancelEditBtn').style.display = "inline-block";
+      adminPanel.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    async function saveBanner(e) {
-      e.preventDefault();
-      const file = document.getElementById("b-image").files[0];
-      if (file) {
-        const base64 = await fileToBase64(file);
-        const banner = {
-          id: "main_banner",
-          title: document.getElementById("b-title").value,
-          image: base64
-        };
-        await dbSave("banners", banner);
-        alert("Banner updated!");
-        loadBanners();
-      }
+    document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+    function resetForm() {
+      productForm.reset();
+      document.getElementById('prodId').value = '';
+      shadeRowsContainer.innerHTML = '';
+      addShadeRowData('Matte Crimson', '#B83A4B', 'matte');
+      document.getElementById('adminFormTitle').innerText = "Add New Product";
+      document.getElementById('cancelEditBtn').style.display = "none";
     }
 
-    async function loadBanners() {
-      const banners = await dbGetAll("banners");
-      if (banners.length > 0) {
-        const mainBanner = banners[0];
-        document.getElementById("hero-banner").style.backgroundImage = `url('${mainBanner.image}')`;
-        document.getElementById("banner-title").innerText = mainBanner.title;
-      }
-    }
+    // Default Init
+    addShadeRowData('Matte Crimson', '#B83A4B', 'matte');
+    renderProducts();
   </script>
 </body>
 </html>
