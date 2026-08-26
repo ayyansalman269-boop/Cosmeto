@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>COSMETO COSMETICS</title>
+  <title>Cosmeto Cosmetics</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
@@ -95,7 +95,7 @@
 
   <!-- Header -->
   <header>
-    <div class="brand">USHA'S Beauty</div>
+    <div class="brand">Cosmeto Cosmetics</div>
     <div class="nav-tools">
       <button class="btn" id="toggleAdminBtn"><i class="fa-solid fa-user-gear"></i> Admin Panel</button>
       <button class="cart-btn" id="cartBtn">
@@ -116,11 +116,11 @@
         <div class="form-grid">
           <div class="form-group">
             <label>Product Name</label>
-            <input type="text" id="prodName" required placeholder="e.g. T.V. Paint Matt Stick">
+            <input type="text" id="prodName" required placeholder="e.g. Velvet Lip Color">
           </div>
           <div class="form-group">
             <label>Price (Rs.)</label>
-            <input type="number" step="1" id="prodPrice" required placeholder="1499">
+            <input type="number" step="1" id="prodPrice" required placeholder="1850">
           </div>
           <div class="form-group">
             <label>Main Default Image URL</label>
@@ -179,8 +179,8 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <h4>About USHA'S Beauty</h4>
-        <p>USHA'S offers professional-grade makeup essentials designed for high performance, smooth blending, and full coverage suited for all skin tones.</p>
+        <h4>About Cosmeto Cosmetics</h4>
+        <p>Cosmeto Cosmetics offers premium, cruelty-free, and highly pigmented makeup essentials engineered to celebrate every skin tone and style.</p>
       </div>
       <div class="footer-col">
         <h4>Customer Care</h4>
@@ -193,9 +193,9 @@
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
-        <p><i class="fa-solid fa-envelope"></i> support@ushasbeauty.com</p>
+        <p><i class="fa-solid fa-envelope"></i> support@cosmetocosmetics.com</p>
         <p><i class="fa-solid fa-phone"></i> +92 (300) 123-4567</p>
-        <p><i class="fa-solid fa-location-dot"></i> Karachi, Pakistan</p>
+        <p><i class="fa-solid fa-location-dot"></i> Pakistan</p>
       </div>
       <div class="footer-col">
         <h4>Follow Us</h4>
@@ -207,34 +207,34 @@
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 USHA'S Beauty. All rights reserved.
+      &copy; 2026 Cosmeto Cosmetics. All rights reserved.
     </div>
   </footer>
 
   <script>
-    // Initial Products State (PKR prices & shade images dynamic linking)
+    // Initial Products State (PKR pricing + Shade-to-Image Swapping)
     let products = [
       {
         id: 1,
-        name: "TV Paint Matt Stick Foundation",
+        name: "Velvet Lip Color",
         price: 1850,
         img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80",
-        desc: "Full coverage base stick with oil control finish. Choose your specific skin shade below.",
+        desc: "High-pigment color available in versatile finishes from ultra-matte to radiant glitter.",
         shades: [
-          { name: "Velvet Red", color: "#B83A4B", finish: "matte", img: "image_agent_tag_12381378327912655709" },
-          { name: "Sparkling Ruby", color: "#800020", finish: "glitter", img: "image_agent_tag_12381378327912654524" },
-          { name: "Sunset Nude", color: "#D87093", finish: "simple", img: "image_agent_tag_12381378327912656894" }
+          { name: "Ruby Red", color: "#B83A4B", finish: "matte", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" },
+          { name: "Sparkling Plum", color: "#800020", finish: "glitter", img: "https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?w=500&q=80" },
+          { name: "Soft Nude", color: "#D87093", finish: "simple", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" }
         ]
       },
       {
         id: 2,
-        name: "Air Matte Blush",
+        name: "Derma Studio Blush",
         price: 1450,
         img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80",
-        desc: "Soft-focus powder blush that glides effortlessly across cheekbones.",
+        desc: "Weightless texture that blends smoothly onto cheeks for a glowing blush effect.",
         shades: [
-          { name: "Warm Peach", color: "#FFA07A", finish: "simple", img: "image_agent_tag_12381378327912656894" },
-          { name: "Matte Rosewood", color: "#FA8072", finish: "matte", img: "image_agent_tag_12381378327912655709" }
+          { name: "Peach Soft", color: "#FFA07A", finish: "simple", img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80" },
+          { name: "Matte Rose", color: "#FA8072", finish: "matte", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80" }
         ]
       }
     ];
@@ -263,14 +263,12 @@
     function renderProducts() {
       productsGrid.innerHTML = '';
       products.forEach(p => {
-        // Set initial display shade
         const activeShade = p.selectedShade || p.shades[0];
         const displayImg = (activeShade && activeShade.img) ? activeShade.img : p.img;
 
         const card = document.createElement('div');
         card.className = 'product-card';
         
-        // Build Shade Swatches HTML for the Card
         let swatchesHtml = '';
         p.shades.forEach((s, idx) => {
           const isSel = s === activeShade ? 'selected' : '';
@@ -368,7 +366,7 @@
           selectedShadeObj = s;
           selectedCurrentProduct.selectedShade = s;
           updateModalView();
-          renderProducts(); // Keep card main view synced as well
+          renderProducts();
         });
         swatchesContainer.appendChild(swatch);
       });
@@ -398,7 +396,6 @@
       const img = document.getElementById('prodImg').value;
       const desc = document.getElementById('prodDesc').value;
 
-      // Extract Shades Data from Admin Panel
       const shadeRows = shadeRowsContainer.querySelectorAll('.shade-input-row');
       const shades = [];
       shadeRows.forEach(row => {
@@ -453,7 +450,7 @@
       document.getElementById('cancelEditBtn').style.display = "none";
     }
 
-    // Default Initialization
+    // Initialization
     addShadeRowData('Matte Crimson', '#B83A4B', 'matte', 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80');
     renderProducts();
   </script>
