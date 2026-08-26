@@ -70,7 +70,7 @@
     .mini-swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid #ddd; cursor: pointer; transition: transform 0.1s; position: relative; }
     .mini-swatch.selected { border: 2px solid #000; transform: scale(1.15); }
 
-    /* Product Details Modal */
+    /* Product Details Modal & Password Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
     .modal.active { display: flex; }
     .modal-content { background: white; border-radius: 16px; max-width: 850px; width: 100%; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem; position: relative; }
@@ -120,7 +120,10 @@
     
     <!-- Admin Add/Edit Panel -->
     <div class="admin-panel" id="adminPanel">
-      <h3 id="adminFormTitle">Add New Product</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 id="adminFormTitle">Add New Product</h3>
+        <button type="button" class="btn" id="logoutAdminBtn" style="background:#dc3545; padding: 4px 12px; font-size: 0.8rem;"><i class="fa-solid fa-lock"></i> Lock Admin</button>
+      </div>
       <form id="productForm">
         <input type="hidden" id="prodId">
         <div class="form-grid">
@@ -160,6 +163,22 @@
     <!-- Product Grid -->
     <h2 style="margin-bottom: 1.5rem;">Our Collection</h2>
     <div class="products-grid" id="productsGrid"></div>
+  </div>
+
+  <!-- Admin Password Modal -->
+  <div class="modal" id="adminAuthModal">
+    <div class="modal-content" style="display: flex; flex-direction: column; max-width: 400px; padding: 2rem;">
+      <button class="modal-close" id="closeAuthModalBtn">&times;</button>
+      <h3 style="margin-bottom: 0.5rem; text-align: center;"><i class="fa-solid fa-shield-halved"></i> Admin Authentication</h3>
+      <p style="font-size: 0.85rem; color: #666; text-align: center; margin-bottom: 1rem;">Enter admin password to manage inventory.</p>
+      <form id="adminAuthForm" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="form-group">
+          <input type="password" id="adminPasswordInput" placeholder="Password" required style="padding: 0.8rem; font-size: 1rem;">
+        </div>
+        <div id="authErrorMsg" style="color: red; font-size: 0.85rem; display: none; text-align: center;">Incorrect password. Access denied.</div>
+        <button type="submit" class="btn" style="padding: 0.8rem;">Login to Admin</button>
+      </form>
+    </div>
   </div>
 
   <!-- Product Details / Shade Selection Modal -->
@@ -268,6 +287,7 @@
     let selectedCurrentProduct = null;
     let selectedShadeObj = null;
     let modalSlideIndex = 0;
+    let isAdminAuthenticated = false;
 
     // DOM References
     const productsGrid = document.getElementById('productsGrid');
@@ -279,10 +299,47 @@
     const closeModalBtn = document.getElementById('closeModalBtn');
     const cartCountEl = document.getElementById('cartCount');
 
-    // Toggle Admin Mode
+    // Admin Password References
+    const adminAuthModal = document.getElementById('adminAuthModal');
+    const adminAuthForm = document.getElementById('adminAuthForm');
+    const adminPasswordInput = document.getElementById('adminPasswordInput');
+    const authErrorMsg = document.getElementById('authErrorMsg');
+    const closeAuthModalBtn = document.getElementById('closeAuthModalBtn');
+    const logoutAdminBtn = document.getElementById('logoutAdminBtn');
+
+    // Toggle Admin Mode with Password Check
     toggleAdminBtn.addEventListener('click', () => {
-      adminPanel.classList.toggle('active');
-      document.body.classList.toggle('admin-active');
+      if (isAdminAuthenticated) {
+        adminPanel.classList.toggle('active');
+        document.body.classList.toggle('admin-active');
+      } else {
+        adminPasswordInput.value = '';
+        authErrorMsg.style.display = 'none';
+        adminAuthModal.classList.add('active');
+      }
+    });
+
+    // Handle Admin Login Form Submission
+    adminAuthForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (adminPasswordInput.value === "1234") {
+        isAdminAuthenticated = true;
+        adminAuthModal.classList.remove('active');
+        adminPanel.classList.add('active');
+        document.body.classList.add('admin-active');
+      } else {
+        authErrorMsg.style.display = 'block';
+      }
+    });
+
+    closeAuthModalBtn.addEventListener('click', () => {
+      adminAuthModal.classList.remove('active');
+    });
+
+    logoutAdminBtn.addEventListener('click', () => {
+      isAdminAuthenticated = false;
+      adminPanel.classList.remove('active');
+      document.body.classList.remove('admin-active');
     });
 
     // Render Products Grid with Image Swipes
