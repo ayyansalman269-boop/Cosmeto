@@ -1,2972 +1,763 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cosmeto Cosmetics</title>
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --pink:#e6a5b9;
-    --dark:#24191e;
-    --rose:#b96582;
-    --light:#fff7fa;
-    --gold:#c9a66b;
-    --white:#fff;
-    --gray:#777;
-    --border:#eadde2;
-}
-
-body{
-    font-family:Arial,sans-serif;
-    background:var(--light);
-    color:var(--dark);
-}
-
-button,input,textarea,select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-/* TOP BAR */
-
-.topbar{
-    background:#24191e;
-    color:white;
-    text-align:center;
-    padding:9px;
-    font-size:12px;
-    letter-spacing:1px;
-}
-
-/* NAVBAR */
-
-.navbar{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(255,247,250,.95);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid var(--border);
-}
-
-.nav{
-    max-width:1200px;
-    margin:auto;
-    padding:15px 20px;
-    display:flex;
-    align-items:center;
-    gap:25px;
-}
-
-.logo{
-    font-family:Georgia,serif;
-    font-size:25px;
-    font-weight:bold;
-    letter-spacing:2px;
-    color:#7e3d55;
-}
-
-.logo small{
-    display:block;
-    text-align:center;
-    font-family:Arial;
-    font-size:9px;
-    letter-spacing:4px;
-    color:var(--gold);
-}
-
-.menu{
-    display:flex;
-    gap:22px;
-    margin-left:auto;
-}
-
-.menu a{
-    font-size:14px;
-}
-
-.actions{
-    display:flex;
-    gap:8px;
-}
-
-.icon{
-    border:1px solid var(--border);
-    background:white;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    position:relative;
-}
-
-.cart-number{
-    position:absolute;
-    right:-3px;
-    top:-4px;
-    background:var(--rose);
-    color:white;
-    font-size:10px;
-    padding:3px 6px;
-    border-radius:50%;
-}
-
-/* SEARCH */
-
-.search-box{
-    max-width:1200px;
-    margin:15px auto;
-    padding:0 20px;
-    display:none;
-}
-
-.search-box input{
-    width:100%;
-    padding:15px 20px;
-    border:1px solid var(--border);
-    border-radius:30px;
-    outline:none;
-}
-
-/* HERO */
-
-.hero{
-    max-width:1200px;
-    margin:20px auto;
-    padding:0 20px;
-}
-
-.hero-content{
-    min-height:480px;
-    border-radius:30px;
-    padding:60px;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
-    position:relative;
-    background:
-    radial-gradient(circle at 80% 45%,#f0b9cb 0,transparent 30%),
-    linear-gradient(110deg,#f8dce5,#fff7fa);
-}
-
-.hero-text{
-    max-width:550px;
-    z-index:2;
-}
-
-.eyebrow{
-    text-transform:uppercase;
-    letter-spacing:4px;
-    color:#a26479;
-    font-size:11px;
-}
-
-.hero h1{
-    font-family:Georgia,serif;
-    font-size:60px;
-    line-height:1.05;
-    margin:15px 0;
-}
-
-.hero p{
-    color:#76666d;
-    line-height:1.8;
-    margin-bottom:25px;
-}
-
-.btn{
-    border:none;
-    background:#24191e;
-    color:white;
-    padding:13px 22px;
-    border-radius:30px;
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.btn-light{
-    background:white;
-    color:#24191e;
-}
-
-.btn-danger{
-    background:#a63f59;
-}
-
-/* SECTIONS */
-
-section{
-    max-width:1200px;
-    margin:65px auto;
-    padding:0 20px;
-}
-
-.section-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    margin-bottom:25px;
-}
-
-.section-title h2{
-    font-family:Georgia,serif;
-    font-size:34px;
-}
-
-.muted{
-    color:var(--gray);
-    font-size:13px;
-}
-
-/* CATEGORIES */
-
-.categories{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:15px;
-}
-
-.category{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:25px 10px;
-    text-align:center;
-    transition:.2s;
-}
-
-.category:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px #0001;
-}
-
-.category-icon{
-    font-size:35px;
-    margin-bottom:10px;
-}
-
-/* PRODUCTS */
-
-.products{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-}
-
-.product{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    overflow:hidden;
-    transition:.25s;
-}
-
-.product:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px #0001;
-}
-
-.product-image{
-    height:270px;
-    background:linear-gradient(145deg,#f5dce5,#fff);
-    position:relative;
-}
-
-.product-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.placeholder{
-    width:100%;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:Georgia;
-    font-size:70px;
-    color:#bd758e;
-}
-
-.product-info{
-    padding:16px;
-}
-
-.product-info h3{
-    font-family:Georgia,serif;
-    font-size:19px;
-    margin-bottom:8px;
-}
-
-.price{
-    font-weight:bold;
-    margin:10px 0;
-}
-
-.shades{
-    display:flex;
-    gap:5px;
-    margin:10px 0;
-    flex-wrap:wrap;
-}
-
-.shade{
-    width:17px;
-    height:17px;
-    border-radius:50%;
-    border:1px solid #aaa;
-}
-
-/* PROMO */
-
-.promo{
-    background:linear-gradient(110deg,#2b2025,#7c4258);
-    color:white;
-    padding:40px;
-    border-radius:25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.promo h2{
-    font-family:Georgia,serif;
-    font-size:35px;
-    margin:8px 0;
-}
-
-/* TRACK */
-
-.track-box{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:25px;
-}
-
-.track-form{
-    display:flex;
-    gap:10px;
-}
-
-.track-form input{
-    flex:1;
-    padding:14px;
-    border:1px solid var(--border);
-    border-radius:10px;
-}
-
-/* FOOTER */
-
-footer{
-    background:#24191e;
-    color:white;
-    padding:55px 20px;
-    margin-top:70px;
-}
-
-.footer-inner{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-}
-
-footer p{
-    color:#cdbfc4;
-    margin-top:10px;
-}
-
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:#0008;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:500;
-    padding:20px;
-}
-
-.modal.active{
-    display:flex;
-}
-
-.modal-content{
-    background:white;
-    border-radius:25px;
-    padding:25px;
-    width:100%;
-    max-width:650px;
-    max-height:90vh;
-    overflow:auto;
-    position:relative;
-}
-
-.close{
-    position:absolute;
-    right:15px;
-    top:15px;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    border:none;
-    background:#f2e8eb;
-}
-
-.field{
-    margin:14px 0;
-}
-
-.field label{
-    display:block;
-    margin-bottom:6px;
-    font-size:13px;
-}
-
-.field input,
-.field textarea,
-.field select{
-    width:100%;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    outline:none;
-}
-
-/* CART */
-
-.cart-item{
-    display:flex;
-    gap:15px;
-    padding:15px 0;
-    border-bottom:1px solid var(--border);
-}
-
-.cart-image{
-    width:70px;
-    height:70px;
-    border-radius:10px;
-    background:#f3dce4;
-    object-fit:cover;
-}
-
-/* ADMIN */
-
-#adminPage{
-    display:none;
-}
-
-.admin-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.admin-nav{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin:20px 0;
-}
-
-.admin-nav button{
-    border:none;
-    padding:11px 15px;
-    border-radius:10px;
-    background:#f0e5e9;
-}
-
-.admin-panel{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:22px;
-    margin-bottom:20px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.stat{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:20px;
-}
-
-.stat strong{
-    display:block;
-    font-size:27px;
-    margin-top:10px;
-}
-
-.admin-products{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.upload{
-    border:2px dashed #d8b7c4;
-    border-radius:15px;
-    padding:30px;
-    text-align:center;
-    background:#fff9fb;
-}
-
-.table-wrapper{
-    overflow:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,td{
-    padding:12px;
-    border-bottom:1px solid var(--border);
-    text-align:left;
-    font-size:13px;
-}
-
-/* TOAST */
-
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:20px;
-    transform:translate(-50%,100px);
-    background:#24191e;
-    color:white;
-    padding:13px 20px;
-    border-radius:30px;
-    z-index:999;
-    transition:.3s;
-}
-
-.toast.show{
-    transform:translate(-50%,0);
-}
-
-/* MOBILE */
-
-@media(max-width:800px){
-
-    .menu{
-        display:none;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmeto Cosmetics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    :root {
+      --primary: #d4a373;
+      --primary-hover: #bc8a5f;
+      --dark: #1a1a1a;
+      --light: #faf7f2;
+      --card-bg: #ffffff;
+      --text: #333333;
+      --accent: #e76f51;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    .hero-content{
-        padding:35px;
-        min-height:420px;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--light); color: var(--text); overflow-x: hidden; }
+
+    /* Navigation Header */
+    header {
+      position: sticky; top: 0; background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px); z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; display: flex; align-items: center;
+      justify-content: space-between; padding: 15px 20px;
+    }
+    .brand-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--dark); cursor: pointer; }
+    .nav-menu { display: flex; gap: 20px; list-style: none; }
+    .nav-link { text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; transition: var(--transition); }
+    .nav-link:hover { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 15px; }
+
+    .search-wrapper { position: relative; }
+    .search-input {
+      padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd;
+      outline: none; transition: var(--transition); width: 140px;
+    }
+    .search-input:focus { width: 200px; border-color: var(--primary); }
+
+    .cart-btn { position: relative; background: none; border: none; font-size: 1.3rem; cursor: pointer; }
+    .cart-badge {
+      position: absolute; top: -8px; right: -8px; background: var(--accent);
+      color: white; font-size: 0.75rem; width: 18px; height: 18px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
     }
 
-    .hero h1{
-        font-size:42px;
+    /* Banners Carousel */
+    .hero-banner {
+      width: 100%; height: 60vh; min-height: 350px; background-size: cover;
+      background-position: center; transition: background-image 0.8s ease-in-out;
+      display: flex; align-items: center; justify-content: center; color: white;
+      text-align: center; position: relative;
     }
-
-    .categories{
-        grid-template-columns:repeat(2,1fr);
+    .hero-overlay {
+      position: absolute; inset: 0; background: rgba(0, 0, 0, 0.35);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
     }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-    .products{
-        grid-template-columns:repeat(2,1fr);
-        gap:10px;
+    /* Page Sections */
+    .page-section { display: none; max-width: 1200px; margin: 30px auto; padding: 0 20px; animation: fadeIn 0.4s ease; }
+    .page-section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Products Grid */
+    .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 25px; text-align: center; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+    
+    .product-card {
+      background: var(--card-bg); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: var(--transition);
+      cursor: pointer; display: flex; flex-direction: column;
     }
-
-    .product-image{
-        height:190px;
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+    .product-img { width: 100%; height: 260px; object-fit: cover; }
+    .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-name { font-weight: 600; font-size: 1rem; margin-bottom: 5px; }
+    .product-price { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
+    .add-cart-btn {
+      width: 100%; padding: 10px; background: var(--dark); color: white;
+      border: none; border-radius: 6px; font-weight: 500; cursor: pointer;
+      margin-top: 10px; transition: var(--transition);
     }
+    .add-cart-btn:hover { background: var(--primary); }
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
+    /* Product Detail View */
+    .detail-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 30px; border-radius: 12px; }
+    @media (max-width: 768px) { .detail-container { grid-template-columns: 1fr; } }
+    .main-detail-img { width: 100%; height: 400px; object-fit: cover; border-radius: 8px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 15px; max-height: 200px; overflow-y: auto; }
+    .gallery-thumb { width: 100%; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
+    .gallery-thumb.active { border-color: var(--primary); }
+    
+    .shades-section { margin: 20px 0; }
+    .shades-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+    .shades-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .shade-pill {
+      padding: 6px 14px; border: 1px solid #ddd; border-radius: 20px;
+      font-size: 0.85rem; cursor: pointer; transition: var(--transition);
     }
+    .shade-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    .admin-products{
-        grid-template-columns:1fr;
+    /* Modal / Admin Styles */
+    .modal {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 2000; justify-content: center; align-items: center; padding: 20px;
     }
+    .modal.active { display: flex; }
+    .modal-body { background: white; border-radius: 12px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 30px; position: relative; }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; }
 
-    .promo{
-        display:block;
+    .admin-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+    @media (max-width: 768px) { .admin-grid { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; outline: none;
     }
+    .dashboard-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+    .dash-card { background: var(--light); padding: 15px; border-radius: 8px; text-align: center; }
+    .dash-card h4 { font-size: 0.85rem; color: #666; }
+    .dash-card p { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
 
-    .footer-inner{
-        display:block;
-    }
-}
-
-@media(max-width:480px){
-
-    .hero h1{
-        font-size:36px;
-    }
-
-    .hero-content{
-        padding:25px;
-    }
-
-    .track-form{
-        display:block;
-    }
-
-    .track-form button{
-        margin-top:10px;
-        width:100%;
-    }
-}
-</style>
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85rem; }
+    th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background: var(--light); }
+  </style>
 </head>
-
 <body>
 
-<!-- TOP BAR -->
-
-<div class="topbar">
-FREE DELIVERY ON ORDERS OVER PKR 5,000 • COSMETO COSMETICS
-</div>
-
-<!-- NAVBAR -->
-
-<header class="navbar">
-<div class="nav">
-
-<a href="#home" class="logo">
-COSMETO
-<small>COSMETICS</small>
-</a>
-
-<nav class="menu">
-<a href="#home">Home</a>
-<a href="#categories">Categories</a>
-<a href="#products">Shop</a>
-<a href="#track">Track Order</a>
-</nav>
-
-<div class="actions">
-
-<button class="icon" onclick="toggleSearch()">⌕</button>
-
-<button class="icon" onclick="openCart()">
-🛍
-<span class="cart-number" id="cartCount">0</span>
-</button>
-
-<button class="icon" onclick="openAdmin()">
-⚙️
-</button>
-
-</div>
-
-</div>
-</header>
-
-<!-- SEARCH -->
-
-<div class="search-box" id="searchBox">
-<input
-type="text"
-id="searchInput"
-placeholder="Search cosmetics..."
-oninput="renderProducts()">
-</div>
-
-<!-- STORE -->
-
-<div id="store">
-
-<!-- HERO -->
-
-<section id="home">
-
-<div class="hero-content">
-
-<div class="hero-text">
-
-<div class="eyebrow">
-COSMETO COSMETICS
-</div>
-
-<h1>
-Luxury made for your everyday glow.
-</h1>
-
-<p>
-Discover beautiful shades, premium makeup and skincare
-essentials created to make your beauty routine special.
-</p>
-
-<button class="btn"
-onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
-Shop Collection
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CATEGORIES -->
-
-<section id="categories">
-
-<div class="section-title">
-
-<h2>Shop by Category</h2>
-
-<span class="muted">
-Discover your favourites
-</span>
-
-</div>
-
-<div class="categories">
-
-<div class="category" onclick="filterCategory('Makeup')">
-<div class="category-icon">💄</div>
-Makeup
-</div>
-
-<div class="category" onclick="filterCategory('Lip')">
-<div class="category-icon">💋</div>
-Lips
-</div>
-
-<div class="category" onclick="filterCategory('Face')">
-<div class="category-icon">✨</div>
-Face
-</div>
-
-<div class="category" onclick="filterCategory('Skincare')">
-<div class="category-icon">🧴</div>
-Skincare
-</div>
-
-<div class="category" onclick="filterCategory('Eyes')">
-<div class="category-icon">👁️</div>
-Eyes
-</div>
-
-</div>
-
-</section>
-
-<!-- PRODUCTS -->
-
-<section id="products">
-
-<div class="section-title">
-
-<h2>Our Collection</h2>
-
-<span class="muted" id="productCount"></span>
-
-</div>
-
-<div class="products" id="productGrid"></div>
-
-</section>
-
-<!-- PROMO -->
-
-<section>
-
-<div class="promo">
-
-<div>
-
-<div class="eyebrow">
-COSMETO EDIT
-</div>
-
-<h2>
-Find Your Perfect Shade.
-</h2>
-
-<p>
-Explore our luxury collection.
-</p>
-
-</div>
-
-<button class="btn btn-light"
-onclick="document.getElementById('products').scrollIntoView()">
-Explore
-</button>
-
-</div>
-
-</section>
-
-<!-- TRACK ORDER -->
-
-<section id="track">
-
-<div class="section-title">
-<h2>Track Your Order</h2>
-</div>
-
-<div class="track-box">
-
-<div class="track-form">
-
-<input
-id="trackNumber"
-placeholder="Enter order number e.g. COS123456">
-
-<button class="btn"
-onclick="trackOrder()">
-Track
-</button>
-
-</div>
-
-<div id="trackingResult" style="margin-top:20px"></div>
-
-</div>
-
-</section>
-
-</div>
-
-<!-- ADMIN -->
-
-<div id="adminPage">
-
-<section>
-
-<div class="admin-header">
-
-<h2>Cosmeto Admin</h2>
-
-<button class="btn"
-onclick="closeAdmin()">
-Back To Store
-</button>
-
-</div>
-
-<div class="admin-nav">
-
-<button onclick="showAdmin('dashboard')">
-📊 Dashboard
-</button>
-
-<button onclick="showAdmin('products')">
-🛍 Products
-</button>
-
-<button onclick="showAdmin('orders')">
-📦 Orders
-</button>
-
-<button onclick="showAdmin('banners')">
-🖼 Banners
-</button>
-
-<button onclick="showAdmin('settings')">
-⚙ Settings
-</button>
-
-</div>
-
-<div id="adminDashboard"></div>
-
-<div id="adminProducts" style="display:none"></div>
-
-<div id="adminOrders" style="display:none"></div>
-
-<div id="adminBanners" style="display:none"></div>
-
-<div id="adminSettings" style="display:none"></div>
-
-</section>
-
-</div>
-
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-inner">
-
-<div>
-
-<div class="logo" style="color:white">
-COSMETO
-<small style="color:#c9a66b">
-COSMETICS
-</small>
-</div>
-
-<p>
-Luxury beauty for every occasion.
-</p>
-
-</div>
-
-<div>
-
-<strong>Customer Care</strong>
-
-<p>
-Track Order<br>
-Order Information<br>
-Contact Us
-</p>
-
-</div>
-
-</div>
-
-</footer>
-
-<!-- MODAL -->
-
-<div class="modal" id="modal">
-
-<div class="modal-content">
-
-<button class="close" onclick="closeModal()">×</button>
-
-<div id="modalBody"></div>
-
-</div>
-
-</div>
-
-<div class="toast" id="toast"></div>
-
-
-<script>
-
-/* =========================================================
-   COSMETO COSMETICS DATABASE
-========================================================= */
-
-const DATABASE_KEY = "COSMETO_DATABASE";
-
-let database =
-JSON.parse(localStorage.getItem(DATABASE_KEY)) || {
-
-products:[
-
-{
-id:"p1",
-name:"Velvet Rose Lipstick",
-price:2499,
-category:"Lip",
-stock:25,
-description:"Creamy luxury lipstick with a smooth finish.",
-shades:["Rose","Nude","Berry","Caramel"],
-images:[]
-},
-
-{
-id:"p2",
-name:"Luminous Silk Foundation",
-price:3999,
-category:"Face",
-stock:18,
-description:"Buildable coverage with a natural luminous finish.",
-shades:["Porcelain","Ivory","Beige","Honey","Tan"],
-images:[]
-},
-
-{
-id:"p3",
-name:"Blush Petal Palette",
-price:2999,
-category:"Makeup",
-stock:30,
-description:"Beautiful soft blush shades.",
-shades:["Petal","Peach","Rose"],
-images:[]
-},
-
-{
-id:"p4",
-name:"Hydra Glow Serum",
-price:3299,
-category:"Skincare",
-stock:20,
-description:"Lightweight serum for a fresh-looking glow.",
-shades:["Clear"],
-images:[]
-},
-
-{
-id:"p5",
-name:"Glam Eye Palette",
-price:3499,
-category:"Eyes",
-stock:14,
-description:"Luxury everyday eye colours.",
-shades:["Champagne","Mocha","Plum"],
-images:[]
-},
-
-{
-id:"p6",
-name:"Soft Nude Lip Gloss",
-price:1999,
-category:"Lip",
-stock:40,
-description:"High-shine comfortable lip gloss.",
-shades:["Nude","Pink","Cocoa"],
-images:[]
-}
-
-],
-
-orders:[],
-
-banners:[
-{
-title:"Your beauty. Your ritual.",
-text:"Discover the Cosmeto collection.",
-image:""
-}
-],
-
-settings:{
-storeName:"Cosmeto Cosmetics",
-email:"your@email.com"
-}
-
-};
-
-
-/* =========================================================
-   SAVE DATABASE
-========================================================= */
-
-function saveDatabase(){
-
-localStorage.setItem(
-DATABASE_KEY,
-JSON.stringify(database)
-);
-
-}
-
-
-/* =========================================================
-   CART
-========================================================= */
-
-let cart =
-JSON.parse(
-localStorage.getItem("COSMETO_CART")
-) || [];
-
-
-let currentCategory = "";
-
-
-function saveCart(){
-
-localStorage.setItem(
-"COSMETO_CART",
-JSON.stringify(cart)
-);
-
-updateCartCount();
-
-}
-
-
-function updateCartCount(){
-
-document.getElementById("cartCount").textContent =
-cart.reduce(
-(total,item)=>total + item.quantity,
-0
-);
-
-}
-
-
-/* =========================================================
-   MONEY
-========================================================= */
-
-function money(number){
-
-return "PKR " +
-Number(number).toLocaleString();
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(message){
-
-const toast =
-document.getElementById("toast");
-
-toast.textContent = message;
-
-toast.classList.add("show");
-
-setTimeout(
-()=>{
-toast.classList.remove("show");
-},
-2200
-);
-
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-function toggleSearch(){
-
-const search =
-document.getElementById("searchBox");
-
-search.style.display =
-search.style.display === "block"
-? "none"
-: "block";
-
-if(search.style.display === "block"){
-document.getElementById("searchInput").focus();
-}
-
-}
-
-
-/* =========================================================
-   PRODUCT DISPLAY
-========================================================= */
-
-function productImage(product){
-
-if(
-product.images &&
-product.images.length > 0
-){
-
-return `
-<img
-src="${product.images[0]}"
-alt="${product.name}">
-`;
-
-}
-
-return `
-<div class="placeholder">
-C
-</div>
-`;
-
-}
-
-
-function renderProducts(){
-
-const search =
-(
-document.getElementById("searchInput")?.value
-|| ""
-).toLowerCase();
-
-let products =
-database.products.filter(product=>{
-
-const matchesCategory =
-!currentCategory ||
-product.category === currentCategory;
-
-const matchesSearch =
-!search ||
-(
-product.name +
-" " +
-product.category +
-" " +
-product.description
-)
-.toLowerCase()
-.includes(search);
-
-return matchesCategory && matchesSearch;
-
-});
-
-
-document.getElementById("productCount").textContent =
-products.length + " products";
-
-
-document.getElementById("productGrid").innerHTML =
-products.map(product=>`
-
-<div class="product">
-
-<div class="product-image">
-
-${productImage(product)}
-
-</div>
-
-<div class="product-info">
-
-<h3>
-${product.name}
-</h3>
-
-<p class="muted">
-${product.description}
-</p>
-
-<div class="shades">
-
-${product.shades
-.slice(0,10)
-.map(
-(shade,index)=>`
-
-<span
-class="shade"
-title="${shade}"
-style="
-background:hsl(
-${340 + index*12},
-${45 + index*3}%,
-${45 + index*4}%
-);
-">
-</span>
-
-`
-)
-.join("")}
-
-</div>
-
-<div class="price">
-${money(product.price)}
-</div>
-
-<button
-class="btn"
-style="width:100%"
-onclick="openProduct('${product.id}')">
-
-View Product
-
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-
-/* =========================================================
-   CATEGORY
-========================================================= */
-
-function filterCategory(category){
-
-currentCategory = category;
-
-renderProducts();
-
-document
-.getElementById("products")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-function openModal(){
-
-document
-.getElementById("modal")
-.classList.add("active");
-
-}
-
-
-function closeModal(){
-
-document
-.getElementById("modal")
-.classList.remove("active");
-
-}
-
-
-/* =========================================================
-   PRODUCT MODAL
-========================================================= */
-
-function openProduct(id){
-
-const product =
-database.products.find(
-p=>p.id === id
-);
-
-if(!product) return;
-
-
-document.getElementById("modalBody").innerHTML = `
-
-<div class="product-image"
-style="height:300px">
-
-${productImage(product)}
-
-</div>
-
-<h2 style="
-font-family:Georgia;
-margin-top:20px;
-">
-${product.name}
-</h2>
-
-<h3 style="margin-top:10px">
-${money(product.price)}
-</h3>
-
-<p class="muted"
-style="margin-top:10px">
-${product.description}
-</p>
-
-<div class="field">
-
-<label>
-Choose Shade
-</label>
-
-<select id="selectedShade">
-
-${product.shades
-.map(
-shade=>`
-<option>${shade}</option>
-`
-)
-.join("")}
-
-</select>
-
-</div>
-
-<div class="field">
-
-<label>
-Quantity
-</label>
-
-<input
-id="selectedQuantity"
-type="number"
-min="1"
-max="${product.stock}"
-value="1">
-
-</div>
-
-<button
-class="btn"
-style="width:100%"
-onclick="addToCart('${product.id}')">
-
-Add To Cart
-
-</button>
-
-`;
-
-openModal();
-
-}
-
-
-/* =========================================================
-   ADD TO CART
-========================================================= */
-
-function addToCart(productId){
-
-const product =
-database.products.find(
-p=>p.id === productId
-);
-
-const shade =
-document.getElementById(
-"selectedShade"
-).value;
-
-const quantity =
-Number(
-document.getElementById(
-"selectedQuantity"
-).value
-);
-
-
-if(quantity < 1){
-
-showToast("Invalid quantity");
-
-return;
-
-}
-
-
-const existing =
-cart.find(
-item =>
-item.productId === productId &&
-item.shade === shade
-);
-
-
-if(existing){
-
-existing.quantity += quantity;
-
-}else{
-
-cart.push({
-
-productId,
-shade,
-quantity
-
-});
-
-}
-
-
-saveCart();
-
-closeModal();
-
-showToast(
-"Product added to cart"
-);
-
-}
-
-
-/* =========================================================
-   CART
-========================================================= */
-
-function openCart(){
-
-let total = 0;
-
-
-let html = `
-<h2 style="font-family:Georgia">
-Your Shopping Bag
-</h2>
-`;
-
-
-if(cart.length === 0){
-
-html += `
-<p class="muted"
-style="margin-top:20px">
-Your cart is empty.
-</p>
-`;
-
-}else{
-
-cart.forEach(
-(item,index)=>{
-
-const product =
-database.products.find(
-p=>p.id === item.productId
-);
-
-if(!product) return;
-
-const itemTotal =
-product.price *
-item.quantity;
-
-total += itemTotal;
-
-
-html += `
-
-<div class="cart-item">
-
-<div class="cart-image">
-
-${
-product.images?.[0]
-?
-`<img
-class="cart-image"
-src="${product.images[0]}">`
-:
-"💄"
-}
-
-</div>
-
-<div style="flex:1">
-
-<strong>
-${product.name}
-</strong>
-
-<p class="muted">
-Shade: ${item.shade}
-</p>
-
-<p>
-Qty: ${item.quantity}
-</p>
-
-<strong>
-${money(itemTotal)}
-</strong>
-
-</div>
-
-<button
-onclick="removeCart(${index})">
-×
-</button>
-
-</div>
-
-`;
-
-}
-
-html += `
-
-<hr>
-
-<h3 style="margin:20px 0">
-
-Total:
-${money(total)}
-
-</h3>
-
-<button
-class="btn"
-style="width:100%"
-onclick="checkout()">
-
-Checkout
-
-</button>
-
-`;
-
-}
-
-
-document.getElementById("modalBody").innerHTML =
-html;
-
-openModal();
-
-}
-
-
-function removeCart(index){
-
-cart.splice(index,1);
-
-saveCart();
-
-openCart();
-
-}
-
-
-/* =========================================================
-   CHECKOUT
-========================================================= */
-
-function checkout(){
-
-document.getElementById("modalBody").innerHTML = `
-
-<h2 style="font-family:Georgia">
-Checkout
-</h2>
-
-<div class="field">
-
-<label>
-Full Name
-</label>
-
-<input id="customerName">
-
-</div>
-
-<div class="field">
-
-<label>
-Email
-</label>
-
-<input
-id="customerEmail"
-type="email">
-
-</div>
-
-<div class="field">
-
-<label>
-Phone
-</label>
-
-<input id="customerPhone">
-
-</div>
-
-<div class="field">
-
-<label>
-Delivery Address
-</label>
-
-<textarea
-id="customerAddress"
-rows="3">
-</textarea>
-
-</div>
-
-<div class="field">
-
-<label>
-City
-</label>
-
-<input id="customerCity">
-
-</div>
-
-<button
-class="btn"
-style="width:100%"
-onclick="placeOrder()">
-
-Place Order
-
-</button>
-
-`;
-
-}
-
-
-/* =========================================================
-   PLACE ORDER
-========================================================= */
-
-function placeOrder(){
-
-const name =
-document.getElementById(
-"customerName"
-).value.trim();
-
-const email =
-document.getElementById(
-"customerEmail"
-).value.trim();
-
-const phone =
-document.getElementById(
-"customerPhone"
-).value.trim();
-
-const address =
-document.getElementById(
-"customerAddress"
-).value.trim();
-
-const city =
-document.getElementById(
-"customerCity"
-).value.trim();
-
-
-if(
-!name ||
-!email ||
-!phone ||
-!address ||
-!city
-){
-
-showToast(
-"Please complete all fields"
-);
-
-return;
-
-}
-
-
-let total = 0;
-
-
-cart.forEach(item=>{
-
-const product =
-database.products.find(
-p=>p.id === item.productId
-);
-
-if(product){
-
-total +=
-product.price *
-item.quantity;
-
-}
-
-});
-
-
-const order = {
-
-id:
-"COS" +
-Math.floor(
-100000 +
-Math.random()*900000
-),
-
-date:
-new Date().toISOString(),
-
-customer:{
-name,
-email,
-phone,
-address,
-city
-},
-
-items:
-JSON.parse(
-JSON.stringify(cart)
-),
-
-total,
-
-status:"Pending"
-
-};
-
-
-database.orders.unshift(order);
-
-saveDatabase();
-
-
-cart = [];
-
-saveCart();
-
-
-document.getElementById("modalBody").innerHTML = `
-
-<div style="
-text-align:center;
-padding:20px;
-">
-
-<div style="font-size:60px">
-✓
-</div>
-
-<h2 style="
-font-family:Georgia;
-margin:15px 0;
-">
-Order Confirmed
-</h2>
-
-<p>
-Your order number is:
-</p>
-
-<h2>
-${order.id}
-</h2>
-
-<p class="muted"
-style="margin:15px 0">
-
-Please save this order number
-to track your delivery.
-
-</p>
-
-<button
-class="btn"
-onclick="
-closeModal();
-document.getElementById('trackNumber').value='${order.id}';
-document.getElementById('track').scrollIntoView();
-">
-
-Track Order
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   TRACK ORDER
-========================================================= */
-
-function trackOrder(){
-
-const number =
-document.getElementById(
-"trackNumber"
-).value.trim().toUpperCase();
-
-
-const order =
-database.orders.find(
-o=>o.id === number
-);
-
-
-const result =
-document.getElementById(
-"trackingResult"
-);
-
-
-if(!order){
-
-result.innerHTML = `
-<p class="muted">
-Order not found.
-</p>
-`;
-
-return;
-
-}
-
-
-result.innerHTML = `
-
-<div class="admin-panel">
-
-<h3>
-Order ${order.id}
-</h3>
-
-<p style="margin-top:10px">
-Customer:
-${order.customer.name}
-</p>
-
-<p>
-Total:
-${money(order.total)}
-</p>
-
-<p style="margin-top:10px">
-
-Status:
-
-<strong>
-${order.status}
-</strong>
-
-</p>
-
-<hr style="margin:20px 0">
-
-<p>
-Pending →
-Confirmed →
-Processing →
-Shipped →
-Delivered
-</p>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   ADMIN LOGIN
-========================================================= */
-
-function openAdmin(){
-
-document.getElementById("modalBody").innerHTML = `
-
-<h2 style="font-family:Georgia">
-Admin Login
-</h2>
-
-<div class="field">
-
-<label>
-Admin Password
-</label>
-
-<input
-id="adminPassword"
-type="password"
-placeholder="Enter password">
-
-</div>
-
-<button
-class="btn"
-style="width:100%"
-onclick="loginAdmin()">
-
-Login
-
-</button>
-
-`;
-
-openModal();
-
-}
-
-
-function loginAdmin(){
-
-const password =
-document.getElementById(
-"adminPassword"
-).value;
-
-
-if(password !== "admin1234"){
-
-showToast(
-"Incorrect admin password"
-);
-
-return;
-
-}
-
-
-closeModal();
-
-document.getElementById("store").style.display =
-"none";
-
-document.querySelector("footer").style.display =
-"none";
-
-document.getElementById("adminPage").style.display =
-"block";
-
-window.scrollTo(0,0);
-
-showAdmin("dashboard");
-
-}
-
-
-/* =========================================================
-   CLOSE ADMIN
-========================================================= */
-
-function closeAdmin(){
-
-document.getElementById("adminPage").style.display =
-"none";
-
-document.getElementById("store").style.display =
-"block";
-
-document.querySelector("footer").style.display =
-"block";
-
-}
-
-
-/* =========================================================
-   ADMIN TABS
-========================================================= */
-
-function showAdmin(page){
-
-const pages=[
-"dashboard",
-"products",
-"orders",
-"banners",
-"settings"
-];
-
-
-pages.forEach(
-name=>{
-document.getElementById(
-"admin"+
-name.charAt(0).toUpperCase()+
-name.slice(1)
-).style.display =
-"none";
-}
-);
-
-
-document.getElementById(
-"admin"+
-page.charAt(0).toUpperCase()+
-page.slice(1)
-).style.display =
-"block";
-
-
-if(page === "dashboard")
-renderDashboard();
-
-if(page === "products")
-renderAdminProducts();
-
-if(page === "orders")
-renderAdminOrders();
-
-if(page === "banners")
-renderAdminBanners();
-
-if(page === "settings")
-renderAdminSettings();
-
-}
-
-
-/* =========================================================
-   ADMIN DASHBOARD
-========================================================= */
-
-function renderDashboard(){
-
-const revenue =
-database.orders.reduce(
-(total,order)=>
-total + order.total,
-0
-);
-
-
-document.getElementById(
-"adminDashboard"
-).innerHTML = `
-
-<div class="stats">
-
-<div class="stat">
-
-Revenue
-
-<strong>
-${money(revenue)}
-</strong>
-
-</div>
-
-<div class="stat">
-
-Orders
-
-<strong>
-${database.orders.length}
-</strong>
-
-</div>
-
-<div class="stat">
-
-Products
-
-<strong>
-${database.products.length}
-</strong>
-
-</div>
-
-<div class="stat">
-
-Pending Orders
-
-<strong>
-${
-database.orders.filter(
-o=>o.status==="Pending"
-).length
-}
-</strong>
-
-</div>
-
-</div>
-
-<div class="admin-panel"
-style="margin-top:20px">
-
-<h3>
-Recent Orders
-</h3>
-
-${
-database.orders
-.slice(0,10)
-.map(
-order=>`
-
-<p style="padding:10px 0">
-<strong>
-${order.id}
-</strong>
-
-—
-${order.customer.name}
-
-—
-${money(order.total)}
-
-—
-${order.status}
-
-</p>
-
-`
-)
-.join("")
-||
-"<p class='muted'>No orders yet.</p>"
-}
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   ADMIN PRODUCTS
-========================================================= */
-
-function renderAdminProducts(){
-
-document.getElementById(
-"adminProducts"
-).innerHTML = `
-
-<div class="admin-panel">
-
-<h3>
-Add New Product
-</h3>
-
-<div class="field">
-
-<label>
-Product Name
-</label>
-
-<input id="adminProductName">
-
-</div>
-
-<div class="field">
-
-<label>
-Price PKR
-</label>
-
-<input
-id="adminProductPrice"
-type="number">
-
-</div>
-
-<div class="field">
-
-<label>
-Category
-</label>
-
-<select id="adminProductCategory">
-
-<option>Makeup</option>
-<option>Lip</option>
-<option>Face</option>
-<option>Skincare</option>
-<option>Eyes</option>
-
-</select>
-
-</div>
-
-<div class="field">
-
-<label>
-Stock
-</label>
-
-<input
-id="adminProductStock"
-type="number">
-
-</div>
-
-<div class="field">
-
-<label>
-Description
-</label>
-
-<textarea
-id="adminProductDescription">
-</textarea>
-
-</div>
-
-<div class="field">
-
-<label>
-Shades — separate with commas
-</label>
-
-<input
-id="adminProductShades"
-placeholder="Rose, Nude, Berry, Cocoa">
-
-</div>
-
-<div class="upload">
-
-<strong>
-Upload up to 24 product images
-</strong>
-
-<p class="muted">
-Select images directly from your phone.
-</p>
-
-<input
-id="adminProductImages"
-type="file"
-accept="image/*"
-multiple
-style="margin-top:15px">
-
-</div>
-
-<br>
-
-<button
-class="btn"
-onclick="createProduct()">
-
-Add Product
-
-</button>
-
-</div>
-
-
-<div class="admin-products">
-
-${
-database.products.map(
-product=>`
-
-<div class="admin-panel">
-
-<div class="product-image"
-style="height:200px">
-
-${productImage(product)}
-
-</div>
-
-<h3 style="margin-top:15px">
-${product.name}
-</h3>
-
-<p>
-${money(product.price)}
-</p>
-
-<p class="muted">
-${product.stock} in stock
-</p>
-
-<p class="muted">
-Shades:
-${product.shades.join(", ")}
-</p>
-
-<button
-class="btn btn-danger"
-style="margin-top:10px"
-onclick="deleteProduct('${product.id}')">
-
-Delete
-
-</button>
-
-</div>
-
-`
-).join("")
-}
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   CREATE PRODUCT
-========================================================= */
-
-async function createProduct(){
-
-const name =
-document.getElementById(
-"adminProductName"
-).value.trim();
-
-const price =
-Number(
-document.getElementById(
-"adminProductPrice"
-).value
-);
-
-const category =
-document.getElementById(
-"adminProductCategory"
-).value;
-
-const stock =
-Number(
-document.getElementById(
-"adminProductStock"
-).value
-);
-
-const description =
-document.getElementById(
-"adminProductDescription"
-).value;
-
-const shades =
-document.getElementById(
-"adminProductShades"
-).value
-.split(",")
-.map(x=>x.trim())
-.filter(Boolean);
-
-const files =
-[
-...
-document.getElementById(
-"adminProductImages"
-).files
-].slice(0,24);
-
-
-if(!name){
-
-showToast(
-"Product name is required"
-);
-
-return;
-
-}
-
-
-let images = [];
-
-
-if(files.length){
-
-images =
-await Promise.all(
-files.map(
-file=>
-new Promise(resolve=>{
-
-const reader =
-new FileReader();
-
-reader.onload =
-()=>{
-resolve(
-reader.result
-);
-};
-
-reader.readAsDataURL(file);
-
-})
-)
-);
-
-}
-
-
-database.products.push({
-
-id:
-"product_"+Date.now(),
-
-name,
-
-price,
-
-category,
-
-stock,
-
-description,
-
-shades:
-
-shades.length
-? shades
-: ["Default"],
-
-images
-
-});
-
-
-saveDatabase();
-
-renderAdminProducts();
-
-renderProducts();
-
-showToast(
-"Product added successfully"
-);
-
-}
-
-
-/* =========================================================
-   DELETE PRODUCT
-========================================================= */
-
-function deleteProduct(id){
-
-if(
-!confirm(
-"Delete this product?"
-)
-)
-return;
-
-
-database.products =
-database.products.filter(
-product=>product.id !== id
-);
-
-
-saveDatabase();
-
-renderAdminProducts();
-
-renderProducts();
-
-showToast(
-"Product deleted"
-);
-
-}
-
-
-/* =========================================================
-   ADMIN ORDERS
-========================================================= */
-
-function renderAdminOrders(){
-
-document.getElementById(
-"adminOrders"
-).innerHTML = `
-
-<div class="admin-panel">
-
-<h3>
-Order Management
-</h3>
-
-<div class="table-wrapper">
-
-<table>
-
-<tr>
-
-<th>
-Order
-</th>
-
-<th>
-Customer
-</th>
-
-<th>
-Phone
-</th>
-
-<th>
-Total
-</th>
-
-<th>
-Status
-</th>
-
-</tr>
-
-${
-database.orders
-.map(
-(order,index)=>`
-
-<tr>
-
-<td>
-${order.id}
-</td>
-
-<td>
-${order.customer.name}
-</td>
-
-<td>
-${order.customer.phone}
-</td>
-
-<td>
-${money(order.total)}
-</td>
-
-<td>
-
-<select
-onchange="
-updateOrderStatus(
-${index},
-this.value
-)">
-
-${
-[
-"Pending",
-"Confirmed",
-"Processing",
-"Shipped",
-"Delivered",
-"Cancelled"
-]
-.map(
-status=>`
-
-<option
-${status===order.status?"selected":""}>
-
-${status}
-
-</option>
-
-`
-)
-.join("")
-}
-
-</select>
-
-</td>
-
-</tr>
-
-`
-)
-.join("")
-
-}
-
-</table>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   ORDER STATUS
-========================================================= */
-
-function updateOrderStatus(index,status){
-
-database.orders[index].status =
-status;
-
-saveDatabase();
-
-showToast(
-"Order status updated"
-);
-
-}
-
-
-/* =========================================================
-   ADMIN BANNERS
-========================================================= */
-
-function renderAdminBanners(){
-
-const banner =
-database.banners[0] ||
-{
-title:"",
-text:"",
-image:""
-};
-
-
-document.getElementById(
-"adminBanners"
-).innerHTML = `
-
-<div class="admin-panel">
-
-<h3>
-Banner Management
-</h3>
-
-<div class="field">
-
-<label>
-Banner Title
-</label>
-
-<input
-id="bannerTitle"
-value="${banner.title}">
-
-</div>
-
-<div class="field">
-
-<label>
-Banner Text
-</label>
-
-<textarea
-id="bannerText">
-${banner.text}
-</textarea>
-
-</div>
-
-<div class="upload">
-
-<strong>
-Upload Banner Image
-</strong>
-
-<br><br>
-
-<input
-id="bannerImage"
-type="file"
-accept="image/*">
-
-</div>
-
-<br>
-
-<button
-class="btn"
-onclick="saveBanner()">
-
-Save Banner
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   SAVE BANNER
-========================================================= */
-
-async function saveBanner(){
-
-let image =
-database.banners[0]?.image ||
-"";
-
-
-const file =
-document.getElementById(
-"bannerImage"
-).files[0];
-
-
-if(file){
-
-image =
-await new Promise(resolve=>{
-
-const reader =
-new FileReader();
-
-reader.onload =
-()=>{
-resolve(reader.result);
-};
-
-reader.readAsDataURL(file);
-
-});
-
-}
-
-
-database.banners=[{
-
-title:
-document.getElementById(
-"bannerTitle"
-).value,
-
-text:
-document.getElementById(
-"bannerText"
-).value,
-
-image
-
-}];
-
-
-saveDatabase();
-
-showToast(
-"Banner saved"
-);
-
-}
-
-
-/* =========================================================
-   ADMIN SETTINGS
-========================================================= */
-
-function renderAdminSettings(){
-
-document.getElementById(
-"adminSettings"
-).innerHTML = `
-
-<div class="admin-panel">
-
-<h3>
-Store Settings
-</h3>
-
-<div class="field">
-
-<label>
-Store Name
-</label>
-
-<input
-id="storeName"
-value="${database.settings.storeName}">
-
-</div>
-
-<div class="field">
-
-<label>
-Store Email
-</label>
-
-<input
-id="storeEmail"
-value="${database.settings.email}">
-
-</div>
-
-<button
-class="btn"
-onclick="saveSettings()">
-
-Save Settings
-
-</button>
-
-<hr style="margin:25px 0">
-
-<p class="muted">
-
-This single-file version stores its data
-in the browser. A production store should
-use a secure backend/database and server-side
-authentication.
-
-</p>
-
-</div>
-
-`;
-
-}
-
-
-function saveSettings(){
-
-database.settings.storeName =
-document.getElementById(
-"storeName"
-).value;
-
-database.settings.email =
-document.getElementById(
-"storeEmail"
-).value;
-
-saveDatabase();
-
-showToast(
-"Settings saved"
-);
-
-}
-
-
-/* =========================================================
-   MODAL OUTSIDE CLICK
-========================================================= */
-
-document
-.getElementById("modal")
-.addEventListener(
-"click",
-function(event){
-
-if(event.target === this){
-
-closeModal();
-
-}
-
-});
-
-
-/* =========================================================
-   START WEBSITE
-========================================================= */
-
-updateCartCount();
-
-renderProducts();
-
-</script>
-
+  <!-- Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-logo" onclick="showPage('home-page')">Cosmeto</div>
+      <ul class="nav-menu">
+        <li class="nav-link" onclick="showPage('home-page')">Home</li>
+        <li class="nav-link" onclick="showPage('shop-page')">Categories</li>
+        <li class="nav-link" onclick="showPage('track-page')">Track Order</li>
+      </ul>
+      <div class="nav-actions">
+        <div class="search-wrapper">
+          <input type="text" class="search-input" placeholder="Search product..." onkeyup="handleSearch(this.value)">
+        </div>
+        <button class="cart-btn" onclick="openCart()">
+          🛒 <span class="cart-badge" id="cart-count">0</span>
+        </button>
+        <span class="nav-link" style="font-size: 0.8rem;" onclick="openAdminLogin()">Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Home Page -->
+  <div id="home-page" class="page-section active">
+    <div class="hero-banner" id="hero-banner">
+      <div class="hero-overlay">
+        <h1 class="hero-title" id="banner-title">Radiant Beauty Defined</h1>
+        <p id="banner-subtitle">Explore our exclusive cosmetic collection</p>
+      </div>
+    </div>
+    <div style="margin-top: 40px;">
+      <h2 class="section-title">Featured Collections</h2>
+      <div class="grid" id="featured-grid"></div>
+    </div>
+  </div>
+
+  <!-- Shop/Categories Page -->
+  <div id="shop-page" class="page-section">
+    <h2 class="section-title">All Products</h2>
+    <div class="grid" id="shop-grid"></div>
+  </div>
+
+  <!-- Product Detail Page -->
+  <div id="detail-page" class="page-section">
+    <div class="detail-container">
+      <div>
+        <img id="detail-main-img" class="main-detail-img" src="" alt="Product">
+        <div class="gallery-grid" id="detail-gallery"></div>
+      </div>
+      <div>
+        <h2 id="detail-title" style="font-family: 'Playfair Display', serif; font-size: 2rem;"></h2>
+        <p id="detail-price" style="font-size: 1.5rem; color: var(--primary); font-weight: 700; margin: 10px 0;"></p>
+        <p id="detail-desc" style="color: #666; font-size: 0.9rem; line-height: 1.6;"></p>
+        
+        <div class="shades-section">
+          <div class="shades-title">Available Shades</div>
+          <div class="shades-list" id="detail-shades"></div>
+        </div>
+
+        <button class="add-cart-btn" style="padding: 15px; font-size: 1rem;" onclick="addCurrentToCart()">Add To Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Tracking Page -->
+  <div id="track-page" class="page-section">
+    <h2 class="section-title">Track Your Order</h2>
+    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px;">
+      <div class="form-group">
+        <label>Enter Order ID</label>
+        <input type="text" id="track-id-input" placeholder="e.g. ORD-123456">
+      </div>
+      <button class="add-cart-btn" onclick="trackOrder()">Track Status</button>
+      <div id="track-result" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal" id="cart-modal">
+    <div class="modal-body" style="max-width: 500px;">
+      <span class="close-modal" onclick="closeCart()">&times;</span>
+      <h2 class="section-title" style="margin-bottom: 15px;">Your Shopping Cart</h2>
+      <div id="cart-items-container"></div>
+      <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
+        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem;">
+          <span>Total:</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+        <button class="add-cart-btn" style="margin-top: 15px;" onclick="openCheckout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal" id="checkout-modal">
+    <div class="modal-body" style="max-width: 500px;">
+      <span class="close-modal" onclick="closeCheckout()">&times;</span>
+      <h2 class="section-title" style="margin-bottom: 15px;">Checkout</h2>
+      <form id="checkout-form" onsubmit="processOrder(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="cust-name" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="cust-email" required>
+        </div>
+        <div class="form-group">
+          <label>Shipping Address</label>
+          <textarea id="cust-address" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="add-cart-btn">Place Order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Login Modal -->
+  <div class="modal" id="admin-login-modal">
+    <div class="modal-body" style="max-width: 400px;">
+      <span class="close-modal" onclick="closeAdminLogin()">&times;</span>
+      <h2 class="section-title">Admin Access</h2>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="admin-pass-input">
+      </div>
+      <button class="add-cart-btn" onclick="verifyAdmin()">Login</button>
+    </div>
+  </div>
+
+  <!-- Admin Portal Modal -->
+  <div class="modal" id="admin-portal-modal">
+    <div class="modal-body">
+      <span class="close-modal" onclick="closeAdminPortal()">&times;</span>
+      <h2 class="section-title">Admin Control Panel</h2>
+      
+      <div class="dashboard-cards">
+        <div class="dash-card">
+          <h4>Total Orders</h4>
+          <p id="dash-orders">0</p>
+        </div>
+        <div class="dash-card">
+          <h4>Total Revenue</h4>
+          <p id="dash-revenue">$0.00</p>
+        </div>
+      </div>
+
+      <div class="admin-grid">
+        <!-- Add Product Form -->
+        <div>
+          <h3>Add / Update Product</h3>
+          <form id="product-form" onsubmit="saveProduct(event)">
+            <div class="form-group">
+              <label>Product Title</label>
+              <input type="text" id="p-title" required>
+            </div>
+            <div class="form-group">
+              <label>Price ($)</label>
+              <input type="number" step="0.01" id="p-price" required>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <input type="text" id="p-category" placeholder="Lipstick, Foundation, etc." required>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="p-desc" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Shades (Comma separated)</label>
+              <input type="text" id="p-shades" placeholder="Ruby Red, Velvet Rose, Nude">
+            </div>
+            <div class="form-group">
+              <label>Upload Images / Shade Pictures (Up to 24)</label>
+              <input type="file" id="p-images" multiple accept="image/*">
+            </div>
+            <button type="submit" class="add-cart-btn">Save Product</button>
+          </form>
+
+          <hr style="margin: 20px 0;">
+          
+          <h3>Banner Management</h3>
+          <form id="banner-form" onsubmit="saveBanner(event)">
+            <div class="form-group">
+              <label>Banner Title</label>
+              <input type="text" id="b-title" required>
+            </div>
+            <div class="form-group">
+              <label>Banner Image</label>
+              <input type="file" id="b-image" accept="image/*" required>
+            </div>
+            <button type="submit" class="add-cart-btn" style="background: var(--primary);">Update Banner</button>
+          </form>
+        </div>
+
+        <!-- Orders & Inventory List -->
+        <div>
+          <h3>Recent Orders</h3>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-body"></tbody>
+            </table>
+          </div>
+
+          <h3 style="margin-top: 25px;">Product Inventory</h3>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // --- Database Engine (IndexedDB for Large Image Storage) ---
+    const DB_NAME = "CosmetoDB";
+    let db;
+
+    function initDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+          db = e.target.result;
+          if (!db.objectStoreNames.contains("products")) db.createObjectStore("products", { keyPath: "id" });
+          if (!db.objectStoreNames.contains("orders")) db.createObjectStore("orders", { keyPath: "id" });
+          if (!db.objectStoreNames.contains("banners")) db.createObjectStore("banners", { keyPath: "id" });
+        };
+        request.onsuccess = (e) => { db = e.target.result; resolve(); };
+        request.onerror = (e) => reject(e);
+      });
+    }
+
+    function dbSave(storeName, item) {
+      return new Promise((resolve) => {
+        const tx = db.transaction(storeName, "readwrite");
+        tx.objectStore(storeName).put(item);
+        tx.oncomplete = () => resolve();
+      });
+    }
+
+    function dbGetAll(storeName) {
+      return new Promise((resolve) => {
+        const tx = db.transaction(storeName, "readonly");
+        const req = tx.objectStore(storeName).getAll();
+        req.onsuccess = () => resolve(req.result);
+      });
+    }
+
+    function dbDelete(storeName, id) {
+      return new Promise((resolve) => {
+        const tx = db.transaction(storeName, "readwrite");
+        tx.objectStore(storeName).delete(id);
+        tx.oncomplete = () => resolve();
+      });
+    }
+
+    // --- State Management ---
+    let cart = [];
+    let currentProduct = null;
+    let selectedShade = "";
+
+    // --- Application Initialization ---
+    window.addEventListener("DOMContentLoaded", async () => {
+      await initDB();
+      // Optional EmailJS initialization
+      // emailjs.init("YOUR_PUBLIC_KEY"); 
+      loadBanners();
+      loadProducts();
+    });
+
+    // --- Navigation Routing ---
+    function showPage(pageId) {
+      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+      window.scrollTo(0,0);
+    }
+
+    // --- Product & Catalog Engine ---
+    async function loadProducts() {
+      const products = await dbGetAll("products");
+      renderGrid("featured-grid", products.slice(0, 4));
+      renderGrid("shop-grid", products);
+      renderInventoryTable(products);
+    }
+
+    function renderGrid(containerId, items) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      if (items.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 20px;">No products available.</p>`;
+        return;
+      }
+
+      items.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        const coverImg = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/300';
+        card.innerHTML = `
+          <img class="product-img" src="${coverImg}" alt="${p.title}">
+          <div class="product-info">
+            <div>
+              <div class="product-name">${p.title}</div>
+              <div class="product-price">$${parseFloat(p.price).toFixed(2)}</div>
+            </div>
+            <button class="add-cart-btn" onclick="event.stopPropagation(); quickAddToCart('${p.id}')">Add To Cart</button>
+          </div>
+        `;
+        card.onclick = () => openProductDetail(p);
+        container.appendChild(card);
+      });
+    }
+
+    function openProductDetail(product) {
+      currentProduct = product;
+      document.getElementById("detail-title").innerText = product.title;
+      document.getElementById("detail-price").innerText = `$${parseFloat(product.price).toFixed(2)}`;
+      document.getElementById("detail-desc").innerText = product.description || "No description provided.";
+      
+      const mainImg = document.getElementById("detail-main-img");
+      const gallery = document.getElementById("detail-gallery");
+      gallery.innerHTML = "";
+
+      if (product.images && product.images.length > 0) {
+        mainImg.src = product.images[0];
+        product.images.forEach((imgSrc, idx) => {
+          const thumb = document.createElement("img");
+          thumb.className = `gallery-thumb ${idx === 0 ? 'active' : ''}`;
+          thumb.src = imgSrc;
+          thumb.onclick = () => {
+            mainImg.src = imgSrc;
+            document.querySelectorAll(".gallery-thumb").forEach(t => t.classList.remove("active"));
+            thumb.classList.add("active");
+          };
+          gallery.appendChild(thumb);
+        });
+      }
+
+      const shadesContainer = document.getElementById("detail-shades");
+      shadesContainer.innerHTML = "";
+      if (product.shades && product.shades.length > 0) {
+        selectedShade = product.shades[0];
+        product.shades.forEach((shade, idx) => {
+          const pill = document.createElement("div");
+          pill.className = `shade-pill ${idx === 0 ? 'active' : ''}`;
+          pill.innerText = shade;
+          pill.onclick = () => {
+            selectedShade = shade;
+            document.querySelectorAll(".shade-pill").forEach(p => p.classList.remove("active"));
+            pill.classList.add("active");
+          };
+          shadesContainer.appendChild(pill);
+        });
+      }
+
+      showPage("detail-page");
+    }
+
+    // --- Search functionality ---
+    async function handleSearch(query) {
+      const products = await dbGetAll("products");
+      const filtered = products.filter(p => p.title.toLowerCase().includes(query.toLowerCase()));
+      renderGrid("shop-grid", filtered);
+      showPage("shop-page");
+    }
+
+    // --- Cart System ---
+    async function quickAddToCart(id) {
+      const products = await dbGetAll("products");
+      const prod = products.find(p => p.id === id);
+      if (prod) {
+        cart.push({ ...prod, selectedShade: prod.shades ? prod.shades[0] : '' });
+        updateCartUI();
+      }
+    }
+
+    function addCurrentToCart() {
+      if (currentProduct) {
+        cart.push({ ...currentProduct, selectedShade: selectedShade });
+        updateCartUI();
+      }
+    }
+
+    function updateCartUI() {
+      document.getElementById("cart-count").innerText = cart.length;
+      const container = document.getElementById("cart-items-container");
+      container.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, idx) => {
+        total += parseFloat(item.price);
+        const el = document.createElement("div");
+        el.style.cssText = "display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;";
+        el.innerHTML = `
+          <div>
+            <div style="font-weight:600;">${item.title}</div>
+            <div style="font-size:0.8rem; color:#666;">${item.selectedShade ? 'Shade: ' + item.selectedShade : ''}</div>
+            <div style="color:var(--primary); font-weight:600;">$${parseFloat(item.price).toFixed(2)}</div>
+          </div>
+          <button style="background:none; border:none; color:red; cursor:pointer;" onclick="removeFromCart(${idx})">Remove</button>
+        `;
+        container.appendChild(el);
+      });
+
+      document.getElementById("cart-total").innerText = `$${total.toFixed(2)}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function openCart() { document.getElementById("cart-modal").classList.add("active"); }
+    function closeCart() { document.getElementById("cart-modal").classList.remove("active"); }
+
+    function openCheckout() {
+      if (cart.length === 0) return alert("Your cart is empty!");
+      closeCart();
+      document.getElementById("checkout-modal").classList.add("active");
+    }
+    function closeCheckout() { document.getElementById("checkout-modal").classList.remove("active"); }
+
+    // --- Order Processing & Confirmation Emails ---
+    async function processOrder(e) {
+      e.preventDefault();
+      const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
+      const name = document.getElementById("cust-name").value;
+      const email = document.getElementById("cust-email").value;
+      const address = document.getElementById("cust-address").value;
+      const total = cart.reduce((acc, curr) => acc + parseFloat(curr.price), 0);
+
+      const newOrder = {
+        id: orderId,
+        customer: name,
+        email: email,
+        address: address,
+        items: cart,
+        total: total,
+        status: "Processing",
+        date: new Date().toLocaleDateString()
+      };
+
+      await dbSave("orders", newOrder);
+      sendConfirmationEmail(newOrder);
+
+      alert(`Order Placed Successfully! Your Order ID is: ${orderId}`);
+      cart = [];
+      updateCartUI();
+      closeCheckout();
+    }
+
+    function sendConfirmationEmail(order) {
+      // Configuration hooks for optional EmailJS integration
+      const templateParams = {
+        to_name: order.customer,
+        to_email: order.email,
+        order_id: order.id,
+        total_amount: `$${order.total.toFixed(2)}`
+      };
+      // emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+      console.log("Confirmation email triggered for:", order.email);
+    }
+
+    // --- Order Tracking System ---
+    async function trackOrder() {
+      const input = document.getElementById("track-id-input").value.trim();
+      const orders = await dbGetAll("orders");
+      const match = orders.find(o => o.id === input);
+      const resultDiv = document.getElementById("track-result");
+
+      if (match) {
+        resultDiv.innerHTML = `
+          <div style="background: var(--light); padding: 15px; border-radius: 6px;">
+            <p><strong>Order ID:</strong> ${match.id}</p>
+            <p><strong>Status:</strong> <span style="color:var(--accent); font-weight:600;">${match.status}</span></p>
+            <p><strong>Total:</strong> $${match.total.toFixed(2)}</p>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p style="color:red;">Order not found. Please check your ID.</p>`;
+      }
+    }
+
+    // --- Admin Dashboard & File Handling ---
+    function openAdminLogin() { document.getElementById("admin-login-modal").classList.add("active"); }
+    function closeAdminLogin() { document.getElementById("admin-login-modal").classList.remove("active"); }
+
+    function verifyAdmin() {
+      const pass = document.getElementById("admin-pass-input").value;
+      if (pass === "admin1234") {
+        closeAdminLogin();
+        document.getElementById("admin-portal-modal").classList.add("active");
+        renderAdminDashboard();
+      } else {
+        alert("Incorrect Admin Password!");
+      }
+    }
+    function closeAdminPortal() { document.getElementById("admin-portal-modal").classList.remove("active"); }
+
+    async function renderAdminDashboard() {
+      const orders = await dbGetAll("orders");
+      const products = await dbGetAll("products");
+
+      document.getElementById("dash-orders").innerText = orders.length;
+      const revenue = orders.reduce((acc, curr) => acc + curr.total, 0);
+      document.getElementById("dash-revenue").innerText = `$${revenue.toFixed(2)}`;
+
+      const ordersBody = document.getElementById("orders-table-body");
+      ordersBody.innerHTML = "";
+      orders.forEach(o => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${o.id}</td>
+          <td>${o.customer}</td>
+          <td>$${o.total.toFixed(2)}</td>
+          <td>${o.status}</td>
+        `;
+        ordersBody.appendChild(tr);
+      });
+
+      renderInventoryTable(products);
+    }
+
+    function renderInventoryTable(products) {
+      const invBody = document.getElementById("inventory-table-body");
+      if (!invBody) return;
+      invBody.innerHTML = "";
+      products.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${p.title}</td>
+          <td>$${parseFloat(p.price).toFixed(2)}</td>
+          <td>${p.category}</td>
+          <td><button style="color:red; cursor:pointer;" onclick="deleteProduct('${p.id}')">Delete</button></td>
+        `;
+        invBody.appendChild(tr);
+      });
+    }
+
+    // Converts local files into Base64 strings safely stored in IndexedDB
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    async function saveProduct(e) {
+      e.preventDefault();
+      const files = document.getElementById("p-images").files;
+      const imagePromises = Array.from(files).slice(0, 24).map(file => fileToBase64(file));
+      const imageBase64List = await Promise.all(imagePromises);
+
+      const shadesInput = document.getElementById("p-shades").value;
+      const shadesArr = shadesInput ? shadesInput.split(",").map(s => s.trim()) : [];
+
+      const product = {
+        id: "PROD-" + Date.now(),
+        title: document.getElementById("p-title").value,
+        price: parseFloat(document.getElementById("p-price").value),
+        category: document.getElementById("p-category").value,
+        description: document.getElementById("p-desc").value,
+        shades: shadesArr,
+        images: imageBase64List
+      };
+
+      await dbSave("products", product);
+      alert("Product saved successfully!");
+      document.getElementById("product-form").reset();
+      loadProducts();
+      renderAdminDashboard();
+    }
+
+    async function deleteProduct(id) {
+      if (confirm("Are you sure you want to delete this product?")) {
+        await dbDelete("products", id);
+        loadProducts();
+        renderAdminDashboard();
+      }
+    }
+
+    async function saveBanner(e) {
+      e.preventDefault();
+      const file = document.getElementById("b-image").files[0];
+      if (file) {
+        const base64 = await fileToBase64(file);
+        const banner = {
+          id: "main_banner",
+          title: document.getElementById("b-title").value,
+          image: base64
+        };
+        await dbSave("banners", banner);
+        alert("Banner updated!");
+        loadBanners();
+      }
+    }
+
+    async function loadBanners() {
+      const banners = await dbGetAll("banners");
+      if (banners.length > 0) {
+        const mainBanner = banners[0];
+        document.getElementById("hero-banner").style.backgroundImage = `url('${mainBanner.image}')`;
+        document.getElementById("banner-title").innerText = mainBanner.title;
+      }
+    }
+  </script>
 </body>
 </html>
