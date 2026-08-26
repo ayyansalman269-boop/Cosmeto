@@ -30,12 +30,6 @@
     /* Main Container */
     .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; flex: 1; width: 100%; }
     
-    /* Password Modal */
-    .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 300; align-items: center; justify-content: center; }
-    .pass-modal.active { display: flex; }
-    .pass-box { background: white; padding: 2rem; border-radius: 12px; text-align: center; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-    .pass-box input { width: 100%; padding: 0.6rem; margin: 1rem 0; border: 1px solid #ccc; border-radius: 6px; }
-
     /* Admin Panel */
     .admin-panel { background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: none; border: 1px solid var(--border-color); }
     .admin-panel.active { display: block; }
@@ -43,7 +37,6 @@
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-group label { font-size: 0.85rem; font-weight: 600; }
     .form-group input, .form-group textarea, .form-group select { padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; }
-    .file-input-wrapper { border: 1px dashed var(--primary); padding: 0.5rem; border-radius: 6px; background: #fff; }
 
     /* Dynamic Shade Builder in Admin */
     .shade-builder-box { background: var(--bg-light); border: 1px dashed var(--primary); padding: 1rem; border-radius: 8px; margin-top: 1rem; }
@@ -55,10 +48,10 @@
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
     
     /* Image Slider Container */
-    .slider-container { position: relative; width: 100%; height: 250px; overflow: hidden; background: #f0f0f0; cursor: pointer; }
+    .slider-container { position: relative; width: 100%; height: 240px; overflow: hidden; background: #f0f0f0; cursor: pointer; }
     .slider-track { display: flex; height: 100%; transition: transform 0.3s ease-in-out; }
     .slider-track img { min-width: 100%; height: 100%; object-fit: cover; }
-    .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.7); border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5; font-size: 0.8rem; }
+    .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.7); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5; font-size: 0.8rem; }
     .slider-btn.prev { left: 8px; }
     .slider-btn.next { right: 8px; }
     .slider-dots { position: absolute; bottom: 8px; width: 100%; display: flex; justify-content: center; gap: 4px; z-index: 5; }
@@ -89,7 +82,7 @@
     /* Swatches & Finish Badges */
     .swatch-label { font-size: 0.9rem; font-weight: 600; margin: 1rem 0 0.5rem 0; }
     .swatches-container { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .swatch { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; position: relative; }
+    .swatch { width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; position: relative; background-size: cover; background-position: center; }
     .swatch:hover { transform: scale(1.1); }
     .swatch.selected { border-color: #000; transform: scale(1.15); box-shadow: 0 0 8px rgba(0,0,0,0.3); }
     
@@ -122,20 +115,7 @@
     </div>
   </header>
 
-  <!-- Admin Password Verification Modal -->
-  <div class="pass-modal" id="passModal">
-    <div class="pass-box">
-      <h3>Admin Access</h3>
-      <p style="font-size:0.85rem; color:#666; margin-top:4px;">Enter password (Default: <strong>admin123</strong>)</p>
-      <input type="password" id="adminPassInput" placeholder="Password">
-      <div style="display:flex; gap:0.5rem; justify-content:center;">
-        <button class="btn" id="submitPassBtn">Login</button>
-        <button class="btn" id="cancelPassBtn" style="background:#888;">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Container -->
+  <!-- Container -->
   <div class="container" id="mainContainer">
     
     <!-- Admin Add/Edit Panel -->
@@ -153,11 +133,8 @@
             <input type="number" step="1" id="prodPrice" required placeholder="1850">
           </div>
           <div class="form-group">
-            <label>Product Gallery Images (Select Multiple Files or URLs)</label>
-            <div class="file-input-wrapper">
-              <input type="file" id="prodFileInput" multiple accept="image/*" style="margin-bottom:6px;">
-              <input type="text" id="prodUrlInput" placeholder="Or enter image URLs comma-separated">
-            </div>
+            <label>Direct Upload Image(s)</label>
+            <input type="file" id="prodImgFile" multiple accept="image/*">
           </div>
         </div>
         
@@ -166,7 +143,7 @@
           <textarea id="prodDesc" rows="2" placeholder="Formula details, texture, etc."></textarea>
         </div>
 
-        <!-- Dynamic Shade Builder in Admin -->
+        <!-- Custom Color Palette Builder -->
         <div class="shade-builder-box">
           <label style="font-weight:700; font-size:0.9rem;">Shade Palette Configurator (Matte / Glitter / Simple)</label>
           <div id="shadeRowsContainer" style="margin-top: 0.5rem;"></div>
@@ -191,7 +168,7 @@
       <button class="modal-close" id="closeModalBtn">&times;</button>
       <div class="modal-img-container">
         <!-- Swipeable Modal Gallery -->
-        <div class="slider-container" style="height:340px; border-radius:12px;" id="modalSlider">
+        <div class="slider-container" style="height:340px; border-radius:12px;">
           <div class="slider-track" id="modalSliderTrack"></div>
           <button class="slider-btn prev" onclick="moveModalSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
           <button class="slider-btn next" onclick="moveModalSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
@@ -251,7 +228,7 @@
   </footer>
 
   <script>
-    // Initial Products State with Multiple Gallery Images & Direct Image Upload Support
+    // Initial Products State with Swipeable Gallery Support & Direct File Upload
     let products = [
       {
         id: 1,
@@ -288,65 +265,39 @@
     ];
 
     let cartCount = 0;
-    let isAdminLoggedIn = false;
     let selectedCurrentProduct = null;
     let selectedShadeObj = null;
     let modalSlideIndex = 0;
 
-    // DOM Elements
+    // DOM References
     const productsGrid = document.getElementById('productsGrid');
     const adminPanel = document.getElementById('adminPanel');
     const toggleAdminBtn = document.getElementById('toggleAdminBtn');
-    const passModal = document.getElementById('passModal');
-    const adminPassInput = document.getElementById('adminPassInput');
-    const submitPassBtn = document.getElementById('submitPassBtn');
-    const cancelPassBtn = document.getElementById('cancelPassBtn');
     const productForm = document.getElementById('productForm');
     const shadeRowsContainer = document.getElementById('shadeRowsContainer');
     const productModal = document.getElementById('productModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const cartCountEl = document.getElementById('cartCount');
 
-    // Admin Authentication Flow
+    // Toggle Admin Mode
     toggleAdminBtn.addEventListener('click', () => {
-      if (isAdminLoggedIn) {
-        adminPanel.classList.toggle('active');
-      } else {
-        passModal.classList.add('active');
-      }
+      adminPanel.classList.toggle('active');
+      document.body.classList.toggle('admin-active');
     });
 
-    submitPassBtn.addEventListener('click', verifyAdminPass);
-    cancelPassBtn.addEventListener('click', () => passModal.classList.remove('active'));
-
-    function verifyAdminPass() {
-      if (adminPassInput.value === "admin123") {
-        isAdminLoggedIn = true;
-        passModal.classList.remove('active');
-        adminPanel.classList.add('active');
-        document.body.classList.add('admin-active');
-        toggleAdminBtn.innerHTML = `<i class="fa-solid fa-user-check"></i> Admin Active`;
-        adminPassInput.value = '';
-      } else {
-        alert("Incorrect Admin Password!");
-      }
-    }
-
-    // Render Product Cards & Image Carousels
+    // Render Products Grid with Image Swipes
     function renderProducts() {
       productsGrid.innerHTML = '';
       products.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
         
-        // Swatches
         let swatchesHtml = '';
         p.shades.forEach((s, idx) => {
           const isSel = (p.selectedShade && p.selectedShade.name === s.name) ? 'selected' : '';
           swatchesHtml += `<div class="mini-swatch ${isSel}" style="background-color:${s.color};" title="${s.name} (${s.finish})" onclick="event.stopPropagation(); selectCardShade(${p.id}, ${idx})"></div>`;
         });
 
-        // Gallery Slider Track
         const imagesList = p.images && p.images.length ? p.images : ["https://via.placeholder.com/500"];
         let imgsHtml = '';
         imagesList.forEach(imgSrc => {
@@ -383,7 +334,7 @@
       });
     }
 
-    // Slider Navigation for Main Card
+    // Card Carousel Swipe Controls
     function moveSlide(productId, step) {
       const prod = products.find(p => p.id === productId);
       if (!prod) return;
@@ -392,16 +343,12 @@
       prod.slideIndex = (prod.slideIndex + step + totalImages) % totalImages;
       
       const track = document.getElementById(`track-${productId}`);
-      if (track) {
-        track.style.transform = `translateX(-${prod.slideIndex * 100}%)`;
-      }
+      if (track) track.style.transform = `translateX(-${prod.slideIndex * 100}%)`;
 
       const dotsContainer = document.getElementById(`dots-${productId}`);
       if (dotsContainer) {
         const dots = dotsContainer.querySelectorAll('.dot');
-        dots.forEach((dot, idx) => {
-          dot.classList.toggle('active', idx === prod.slideIndex);
-        });
+        dots.forEach((dot, idx) => dot.classList.toggle('active', idx === prod.slideIndex));
       }
     }
 
@@ -423,7 +370,7 @@
       renderProducts();
     }
 
-    // Dynamic Admin Shade Rows with File Upload Support
+    // Dynamic Admin Shade Rows with File Upload Option
     function addShadeRowData(name = '', color = '#C24050', finish = 'matte', img = '') {
       const row = document.createElement('div');
       row.className = 'shade-input-row';
@@ -457,7 +404,6 @@
     }
 
     function updateModalView() {
-      // Update Modal Gallery Track
       const track = document.getElementById('modalSliderTrack');
       const dotsContainer = document.getElementById('modalSliderDots');
       track.innerHTML = '';
@@ -479,7 +425,7 @@
       document.getElementById('modalPrice').innerText = `Rs. ${selectedCurrentProduct.price.toLocaleString()}`;
       document.getElementById('modalDesc').innerText = selectedCurrentProduct.desc;
 
-      // Render Swatches
+      // Render Modal Swatches
       const swatchesContainer = document.getElementById('modalSwatches');
       swatchesContainer.innerHTML = '';
       
@@ -525,7 +471,17 @@
       alert(`Added ${selectedCurrentProduct.name} - Shade: ${selectedShadeObj.name} (${selectedShadeObj.finish.toUpperCase()}) to cart!`);
     });
 
-    // Save Admin Form (Handles Files + URLs + Base64 Encoding)
+    // Helper: File to Base64 Direct Upload Conversion
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Save Admin Form with File Inputs
     productForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const id = document.getElementById('prodId').value;
@@ -533,21 +489,14 @@
       const price = parseFloat(document.getElementById('prodPrice').value);
       const desc = document.getElementById('prodDesc').value;
 
-      // Processing Gallery Images (Files + URLs)
+      // Direct Image File Upload Handling
       let imagesList = [];
-      const fileInput = document.getElementById('prodFileInput');
-      const urlInput = document.getElementById('prodUrlInput').value.trim();
-
+      const fileInput = document.getElementById('prodImgFile');
       if (fileInput.files.length > 0) {
         for (let file of fileInput.files) {
           const base64 = await readFileAsBase64(file);
           imagesList.push(base64);
         }
-      }
-
-      if (urlInput) {
-        const urls = urlInput.split(',').map(u => u.trim()).filter(u => u !== '');
-        imagesList = imagesList.concat(urls);
       }
 
       // Shades Processing
@@ -579,7 +528,7 @@
 
       if (id) {
         const index = products.findIndex(p => p.id == id);
-        const existingImgs = (imagesList.length > 0 && fileInput.files.length === 0 && !urlInput) ? products[index].images : imagesList;
+        const existingImgs = (fileInput.files.length === 0) ? products[index].images : imagesList;
         products[index] = { id: parseInt(id), name, price, images: existingImgs, desc, shades, selectedShade: shades[0], slideIndex: 0 };
       } else {
         products.push({ id: Date.now(), name, price, images: imagesList, desc, shades, selectedShade: shades[0], slideIndex: 0 });
@@ -589,28 +538,17 @@
       renderProducts();
     });
 
-    // File Reader Helper
-    function readFileAsBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-      });
-    }
-
     function openEditForm(id) {
       const prod = products.find(p => p.id === id);
       document.getElementById('prodId').value = prod.id;
       document.getElementById('prodName').value = prod.name;
       document.getElementById('prodPrice').value = prod.price;
-      document.getElementById('prodUrlInput').value = prod.images ? prod.images.join(', ') : '';
       document.getElementById('prodDesc').value = prod.desc;
       
       shadeRowsContainer.innerHTML = '';
       prod.shades.forEach(s => addShadeRowData(s.name, s.color, s.finish, s.img));
 
-      document.getElementById('adminFormTitle').innerText = "Edit Product & Gallery Images";
+      document.getElementById('adminFormTitle').innerText = "Edit Product & Shades Palette";
       document.getElementById('cancelEditBtn').style.display = "inline-block";
       adminPanel.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
