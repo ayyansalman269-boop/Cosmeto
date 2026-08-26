@@ -1,0 +1,262 @@
+COSMETO COSMETICS — COMPLETE WEBSITE
+
+TECH STACK
+Frontend: HTML + CSS + JavaScript
+Hosting: GitHub Pages
+Backend/Database: Supabase
+Storage: Supabase Storage
+Email: EmailJS / Resend
+Design: Luxury cosmetics, pink + rose-gold, responsive mobile design
+
+CUSTOMER WEBSITE
+├── Home
+│   ├── Hero banner
+│   ├── Promotional banners
+│   ├── Featured products
+│   ├── New arrivals
+│   ├── Best sellers
+│   └── Categories
+│
+├── Categories
+│   ├── Makeup
+│   ├── Lip
+│   ├── Face
+│   ├── Eyes
+│   ├── Skincare
+│   └── Other categories
+│
+├── Product Page
+│   ├── Product name
+│   ├── Price
+│   ├── Description
+│   ├── Up to 24 product images
+│   ├── Product image gallery
+│   ├── Multiple shades
+│   ├── Shade selector
+│   ├── Quantity selector
+│   ├── Stock availability
+│   ├── Add to Cart
+│   └── Buy Now
+│
+├── Search
+│   ├── Working search bar
+│   └── Product filtering
+│
+├── Cart
+│   ├── Products
+│   ├── Selected shades
+│   ├── Quantity
+│   ├── Remove product
+│   ├── Subtotal
+│   └── Checkout
+│
+├── Checkout
+│   ├── Customer name
+│   ├── Email
+│   ├── Phone
+│   ├── Address
+│   ├── City
+│   ├── Order summary
+│   └── Place Order
+│
+├── Order Information
+│   ├── Order number
+│   ├── Order status
+│   ├── Products
+│   ├── Total
+│   └── Delivery information
+│
+└── Track Order
+    ├── Enter order number
+    └── Show order status
+
+
+ADMIN PANEL
+├── Admin Login
+│   └── Secure authentication
+│
+├── Dashboard
+│   ├── Total Revenue
+│   ├── Total Orders
+│   ├── Pending Orders
+│   ├── Delivered Orders
+│   ├── Total Products
+│   └── Sales statistics
+│
+├── Products
+│   ├── Add Product
+│   ├── Edit Product
+│   ├── Delete Product
+│   ├── Product name
+│   ├── Price
+│   ├── Description
+│   ├── Category
+│   ├── Stock
+│   ├── Upload images directly
+│   ├── Upload up to 24 images
+│   ├── Add unlimited shades
+│   └── Shade names
+│
+├── Orders
+│   ├── View orders
+│   ├── Customer information
+│   ├── Ordered products
+│   ├── Total amount
+│   ├── Order number
+│   ├── Confirm order
+│   ├── Processing
+│   ├── Shipped
+│   ├── Delivered
+│   └── Cancel order
+│
+├── Banners
+│   ├── Upload banner image
+│   ├── Change banner
+│   ├── Delete banner
+│   ├── Banner title
+│   ├── Banner text
+│   └── Banner button/link
+│
+├── Categories
+│   ├── Add category
+│   ├── Edit category
+│   └── Delete category
+│
+├── Revenue
+│   ├── Daily revenue
+│   ├── Weekly revenue
+│   ├── Monthly revenue
+│   ├── Total revenue
+│   └── Order statistics
+│
+└── Settings
+    ├── Store name
+    ├── Store email
+    ├── Contact information
+    └── Store settings
+
+
+ORDER SYSTEM
+
+Customer places order
+        ↓
+Order saved in database
+        ↓
+Unique order number generated
+        ↓
+Admin receives order
+        ↓
+Admin confirms order
+        ↓
+Customer can track order
+        ↓
+Admin changes status
+        ↓
+Customer sees updated status
+        ↓
+Confirmation/order email sent
+
+
+EMAIL SYSTEM
+
+Order placed
+      ↓
+Customer receives confirmation email
+      ↓
+Admin receives order notification
+      ↓
+Order status changes
+      ↓
+Customer receives status update
+
+
+DESIGN
+
+Brand: COSMETO COSMETICS
+
+Style:
+• Luxury
+• Feminine
+• Premium cosmetics
+• Pink / blush
+• Rose gold
+• White
+• Soft gradients
+• Glass effects
+• Elegant typography
+• Product animations
+• Smooth hover effects
+• Mobile responsive
+• Instagram-style visual presentation
+
+
+SECURITY
+
+Do NOT put:
+
+admin password directly inside index.html
+
+Instead:
+
+Admin
+ ↓
+Secure authentication
+ ↓
+Admin dashboard
+ ↓
+Database permissions
+ ↓
+Products / Orders / Revenue / Banners
+
+
+PROJECT STRUCTURE
+
+cosmeto-cosmetics/
+│
+├── index.html
+├── shop.html
+├── product.html
+├── cart.html
+├── checkout.html
+├── track-order.html
+├── order.html
+│
+├── admin/
+│   ├── index.html
+│   ├── dashboard.html
+│   ├── products.html
+│   ├── orders.html
+│   ├── banners.html
+│   └── settings.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── app.js
+│   ├── products.js
+│   ├── cart.js
+│   ├── checkout.js
+│   ├── orders.js
+│   └── admin.js
+│
+└── assets/
+    └── images/
+
+
+IMPORTANT
+
+GitHub Pages alone cannot securely provide the complete backend.
+
+Use:
+
+GitHub Pages
++
+Supabase
++
+Supabase Storage
++
+Email service
+
+This allows the website to actually save products, orders,
+images, banners and revenue instead of only displaying them.
